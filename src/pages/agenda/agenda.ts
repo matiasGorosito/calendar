@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { EventsProvider } from '../../providers/events/events';
 
 import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-agenda',
+  providers: [ EventsProvider ],
   templateUrl: 'agenda.html',
 })
 export class AgendaPage {
@@ -21,10 +23,40 @@ export class AgendaPage {
       icon: 'calendar',
       time: {subtitle: 'November', title: '17'}
     },
+    {
+      title: 'Se casa Gus',
+      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
+      icon: 'calendar',
+      time: {subtitle: 'November', title: '17'}
+    },
+    {
+      title: 'Se casa Gus',
+      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
+      icon: 'calendar',
+      time: {subtitle: 'November', title: '17'}
+    },
+    {
+      title: 'Se casa Gus',
+      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
+      icon: 'calendar',
+      time: {subtitle: 'November', title: '17'}
+    },
+    {
+      title: 'Se casa Gus',
+      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
+      icon: 'calendar',
+      time: {subtitle: 'November', title: '17'}
+    },
+    {
+      title: 'Se casa Gus',
+      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
+      icon: 'calendar',
+      time: {subtitle: 'November', title: '17'}
+    },
   ];
 
   storage: Storage;
-  constructor(public navCtrl: NavController, public navParams: NavParams, storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, storage: Storage, public eventsService: EventsProvider) {
     this.storage = storage;
 
     this.storage.get("eventos").then((eventos) => {
@@ -50,6 +82,10 @@ export class AgendaPage {
     item.time.subtitle = data.mes;
     item.time.title = data.dia; 
     this.items.push(item);
+  }
+
+  agregarEvento(page){
+    this.eventsService.agregarEvento(page);    
   }
 
 }

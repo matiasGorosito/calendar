@@ -1,23 +1,19 @@
-import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { EventoPage } from '../../pages/evento/evento';
+import { Injectable } from '@angular/core';
 
-/**
- * Generated class for the EventsComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
-@Component({
-  selector: 'events',
-  templateUrl: 'events.html'
-})
-export class EventsComponent {
+/*
+  Generated class for the EventsProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+@Injectable()
+export class EventsProvider {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     
   }
-
   agregarEvento(paginaOrigen){
     this.navCtrl.setRoot(EventoPage,{ origen: paginaOrigen});
   }  

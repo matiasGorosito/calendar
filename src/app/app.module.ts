@@ -20,7 +20,7 @@ import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
 import { TimelineItemComponent } from '../components/timeline/timeline';
 
-import { EventsComponent } from '../components/events/events';
+import { EventsProvider } from '../providers/events/events';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,7 @@ import { EventsComponent } from '../components/events/events';
     EventoPage,
     TimelineComponent,
     TimelineItemComponent,
-    TimelineTimeComponent,
-    EventsComponent
+    TimelineTimeComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +53,8 @@ import { EventsComponent } from '../components/events/events';
     SplashScreen,
     Storage,
     DatePicker,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    EventsProvider
   ]
 })
 export class AppModule {}

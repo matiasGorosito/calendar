@@ -22,10 +22,10 @@ export class EventoPage {
     this.id = this.navParams.get('id');
 
     if(this.id){
-      this.oper = 'Agregar';
+      this.oper = 'Editar';
     }
     else{
-      this.oper = 'Editar';
+      this.oper = 'Agregar';
     }
 
 
