@@ -8,6 +8,8 @@ import { ConfiguracionPage } from '../pages/configuracion/configuracion';
 import { DiaPage } from '../pages/dia/dia';
 import { MesPage } from '../pages/mes/mes';
 import { EventoPage } from '../pages/evento/evento';
+import { LoginPage } from '../pages/login/login';
+import { RegistroPage } from '../pages/registro/registro';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +23,8 @@ import { TimelineTimeComponent } from '../components/timeline/timeline';
 import { TimelineItemComponent } from '../components/timeline/timeline';
 
 import { EventsProvider } from '../providers/events/events';
+import { UsersProvider } from '../providers/users/users';
+import { AlertsProvider } from '../providers/alerts/alerts';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,9 @@ import { EventsProvider } from '../providers/events/events';
     EventoPage,
     TimelineComponent,
     TimelineItemComponent,
-    TimelineTimeComponent
+    TimelineTimeComponent,
+    LoginPage,
+    RegistroPage,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,9 @@ import { EventsProvider } from '../providers/events/events';
     ConfiguracionPage,
     DiaPage,
     MesPage,
-    EventoPage
+    EventoPage,
+    LoginPage,
+    RegistroPage
   ],
   providers: [
     StatusBar,
@@ -54,7 +62,9 @@ import { EventsProvider } from '../providers/events/events';
     Storage,
     DatePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EventsProvider
+    EventsProvider,
+    UsersProvider,
+    AlertsProvider
   ]
 })
 export class AppModule {}

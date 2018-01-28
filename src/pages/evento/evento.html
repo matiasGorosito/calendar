@@ -13,6 +13,41 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="outer-content">
+    
+  <ion-list>
+    <ion-item>
+      <ion-label>T&iacute;tulo</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Ubicaci&oacute;n</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Fecha Inicio</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label>Hora Inicio</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Hora Fin</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.timeEnds"></ion-datetime>
+    </ion-item>
+
+    <button ion-item>
+      <ion-label>Repetir</ion-label>
+      <ion-note item-end>Never</ion-note>
+    </button>
+  </ion-list>
+
 
 </ion-content>

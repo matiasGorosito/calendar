@@ -7,7 +7,7 @@ import { AgendaPage } from '../pages/agenda/agenda';
 import { ConfiguracionPage } from '../pages/configuracion/configuracion';
 import { DiaPage } from '../pages/dia/dia';
 import { MesPage } from '../pages/mes/mes';
-import { EventoPage } from '../pages/evento/evento';
+import { LoginPage } from '../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +15,7 @@ import { EventoPage } from '../pages/evento/evento';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = AgendaPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
 

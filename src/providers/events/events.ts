@@ -1,6 +1,7 @@
 import { NavController, NavParams } from 'ionic-angular';
 import { EventoPage } from '../../pages/evento/evento';
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the EventsProvider provider.
@@ -10,15 +11,16 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class EventsProvider {
+  storage: Storage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams,storage: Storage) {
+    this.storage = storage;
   }
   agregarEvento(paginaOrigen){
-    this.navCtrl.setRoot(EventoPage,{ origen: paginaOrigen});
+    this.navCtrl.push(EventoPage,{ origen: paginaOrigen});
   }  
 
   editarEvento(paginaOrigen,id){
-    this.navCtrl.setRoot(EventoPage,{ origen:paginaOrigen, id:id});
+    this.navCtrl.push(EventoPage,{ origen:paginaOrigen, id:id});
   }
 }

@@ -20,6 +20,20 @@
     color: color($colors,text);
 }
 
+p {
+    text-indent: 0%;
+}
+
+.div_btn_action{
+    padding-top: 8%;
+    padding-bottom: 8%;
+}
+
+.img_calendar{
+    height:40%;
+    width:40%;
+}
+
 .menu-item {
     background: color($colors,back);
     color: #000000;
@@ -33,6 +47,7 @@
 .item-inner {
     border-bottom-color: #000000!important;
 }
+
 
 .item-ios[detail-push] .item-inner,
 button.item-ios:not([detail-none]) .item-inner,
@@ -61,3 +76,31 @@ a.item-ios:not([detail-none]) .item-inner {
     transition: background-color 200ms linear;
   }
   
+  .item-md {
+    padding-left: 16px;
+    padding-right: 0;
+    position: relative;
+    font-size: 1.6rem;
+    font-weight: normal;
+    text-transform: none;
+    color: #000;
+    background-color: color($colors,back);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .item-input .label-md,
+  .item-select .label-md,
+  .item-datetime .label-md {
+    color: #000;
+  }
+  
+  .list-ios > .item-block:first-child {
+    border-top: 0.55px solid #000000;
+  }
+
+  .list-md .item-input:last-child {
+    border-bottom: 1px solid #000000;
+  }

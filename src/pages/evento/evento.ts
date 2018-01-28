@@ -16,8 +16,23 @@ export class EventoPage {
   paginaOrigen;
   id;
   oper;
-
+  evento;
+  public event = {
+    month: '1990-02-19',
+    timeStarts: '07:43',
+    timeEnds: '1990-02-20'
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.evento = {
+      "titulo":null,
+      "fecha_desde":null,
+      "hora_desde":null,
+      "fecha_hasta":null,
+      "hora_hasta":null,
+      "ubicacion":null,
+      "descripcion":null,
+      "dia_completo":false,
+    }
     this.paginaOrigen = this.navParams.get('paginaOrigen');
     this.id = this.navParams.get('id');
 

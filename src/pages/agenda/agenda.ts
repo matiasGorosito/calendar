@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { EventsProvider } from '../../providers/events/events';
+import { UsersProvider } from '../../providers/users/users';
 
 import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-agenda',
-  providers: [ EventsProvider ],
+  providers: [ EventsProvider, UsersProvider ],
   templateUrl: 'agenda.html',
 })
 export class AgendaPage {
@@ -56,17 +57,27 @@ export class AgendaPage {
   ];
 
   storage: Storage;
-  constructor(public navCtrl: NavController, public navParams: NavParams, storage: Storage, public eventsService: EventsProvider) {
+  constructor(public navCtrl: NavController, 
+            public navParams: NavParams, 
+            storage: Storage, 
+            public eventsService: EventsProvider,
+            public usersService: UsersProvider) {
     this.storage = storage;
 
-    this.storage.get("eventos").then((eventos) => {
-      if(eventos){
-        for(let data of eventos) {
-          this.addItem(data);
-        }
+    this.usersService.getUserConnected().then((usuario_conectado) => {
+      if(usuario_conectado){
+        this.usersService.getUser(usuario_conectado).then((data) => {
+          this.showEvents(data.eventos);
+        });
       }
-    });
+    });  
 
+  }
+
+  showEvents(eventos){
+    for(let data of eventos) {
+      this.addItem(data);
+    }
   }
 
   addItem(data){
