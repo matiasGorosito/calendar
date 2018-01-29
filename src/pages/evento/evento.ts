@@ -23,12 +23,13 @@ export class EventoPage {
     timeEnds: '1990-02-20'
   }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
     this.evento = {
       "titulo":null,
-      "fecha_desde":null,
-      "hora_desde":null,
-      "fecha_hasta":null,
-      "hora_hasta":null,
+      "fecha_inicio":new Date().toISOString(),
+      "hora_inicio":new Date().toISOString(),
+      "fecha_fin":new Date().toISOString(),
+      "hora_fin":new Date().toISOString(),
       "ubicacion":null,
       "descripcion":null,
       "dia_completo":false,

@@ -28,25 +28,33 @@
 
   <ion-list>
     <ion-item>
+      <ion-label>Todo el d&iacute;a</ion-label>
+      <!--<ion-checkbox [(ngModel)]="evento.dia_completo" color="dark"></ion-checkbox>-->
+      <ion-select [(ngModel)]="evento.dia_completo">
+          <ion-option value=true>Si</ion-option>
+          <ion-option value=false>No</ion-option>
+        </ion-select>      
+    </ion-item>
+    <ion-item>
       <ion-label>Fecha Inicio</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.month"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
-
-    <ion-item>
+    <ion-item *ngIf="!evento.dia_completo">
       <ion-label>Hora Inicio</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="event.timeStarts"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label>Hora Fin</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="event.timeEnds"></ion-datetime>
+      <ion-label>Fecha Fin</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_fin"></ion-datetime>
     </ion-item>
 
-    <button ion-item>
-      <ion-label>Repetir</ion-label>
-      <ion-note item-end>Never</ion-note>
-    </button>
+    <ion-item *ngIf="!evento.dia_completo">
+      <ion-label>Hora Fin</ion-label>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_fin"></ion-datetime>
+    </ion-item>
+
   </ion-list>
 
 
