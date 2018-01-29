@@ -18,11 +18,11 @@
   <ion-list>
     <ion-item>
       <ion-label>T&iacute;tulo</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="evento.titulo"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Ubicaci&oacute;n</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="evento.ubicacion"></ion-input>
     </ion-item>
   </ion-list>
 
@@ -37,7 +37,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Fecha Inicio</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" max="{{evento.fecha_fin}}" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
@@ -47,7 +47,7 @@
 
     <ion-item>
       <ion-label>Fecha Fin</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_fin"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" min="{{evento.fecha_inicio}}" [(ngModel)]="evento.fecha_fin"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
@@ -55,7 +55,11 @@
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_fin"></ion-datetime>
     </ion-item>
 
+    <div class="div_btn_action">
+      <button ion-button (click)="guardar()" full round>Guardar</button>
+  </div>
   </ion-list>
+
 
 
 </ion-content>

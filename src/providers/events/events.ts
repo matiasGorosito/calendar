@@ -23,4 +23,5 @@ export class EventsProvider {
   editarEvento(paginaOrigen,id){
     this.navCtrl.push(EventoPage,{ origen:paginaOrigen, id:id});
   }
+
 }

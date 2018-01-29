@@ -16,9 +16,7 @@ export class UsersProvider {
     'password':null,
     'nombre':null,
     'apellido':null,
-    'eventos':{
-
-    } 
+    'eventos':[]
   };
 
   constructor(storage: Storage) {
@@ -34,7 +32,7 @@ export class UsersProvider {
     data.usuario = userData.usuario;
     data.password = userData.password;
     data.nombre = userData.nombre;
-    data.password = userData.password;
+    data.apellido = userData.apellido;
 
     this.storage.set(usuario,data);
   }
@@ -50,4 +48,13 @@ export class UsersProvider {
   logOut(){
     this.storage.remove('usuario_conectado');
   }
+
+  saveEvent(evento){
+    this.getUserConnected().then((usuario) => {
+      this.getUser(usuario).then((data) => {
+        data.eventos.push(evento);
+        this.storage.set(usuario,data);
+      });
+    });
+  }  
 }
