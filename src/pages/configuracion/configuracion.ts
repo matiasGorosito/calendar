@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {  NavController, NavParams } from 'ionic-angular';
+import { UsersProvider } from '../../providers/users/users';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the ConfiguracionPage page.
@@ -10,11 +12,17 @@ import {  NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-configuracion',
+  providers: [ UsersProvider ],
   templateUrl: 'configuracion.html',
 })
 export class ConfiguracionPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public usersService: UsersProvider,) {
   }
 
+  logOut(){
+    this.usersService.logOut();
+    this.navCtrl.setRoot(LoginPage);
+  }
 }

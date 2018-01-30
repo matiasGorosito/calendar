@@ -17,28 +17,26 @@
     <div id="div_img_calendar">
       <img src="../../assets/imgs/calendar2.png" class="img_calendar">
     </div>
-    <h4 style="text-align:center;margin-top: 0.3rem;">Inicie sesi&oacute;n</h4>
+    <h4 style="text-align:center;margin-top: 0.3rem;">Inici&aacute; sesi&oacute;n</h4>
     <p>
-    Inicia sesi&oacute;n en la app para organizar tus eventos y que no se te olvide nada!
+    Ingres&aacute; en la app para organizar tus eventos y que no se te olvide nada!
     </p> 
     <ion-card style="margin-bottom: 1%;border-radius : 5px;">
       <ion-item>
-          <!--<ion-label fixed>Usuario</ion-label>!-->
           <ion-label><ion-icon name="person"></ion-icon></ion-label>
           <ion-input type="text" placeholder="Usuario" [(ngModel)]="log.usuario"></ion-input>
       </ion-item>
     </ion-card>
     <ion-card style="border-radius : 5px;">
       <ion-item>
-          <!--<ion-label fixed>Contraseña</ion-label>!-->
           <ion-label><ion-icon name="key"></ion-icon></ion-label>
           <ion-input type="password" placeholder="Contraseña" [(ngModel)]="log.password"></ion-input>
       </ion-item>
     </ion-card>
     
     <div class="div_btn_action">
-      <button ion-button (click)="login()" round full>Ingresar</button>
+      <button ion-button (click)="login()" round full>Ingres&aacute;</button>
     </div>  
 
-    <div id="div_registro"><a (click)="registrar()"><u>Registrese gratis aqu&iacute;</u></a></div>
+    <div id="div_registro"><a (click)="registrar()"><u>Registrate gratis ac&aacute;</u></a></div>
 </ion-content>

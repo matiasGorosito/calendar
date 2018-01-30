@@ -16,7 +16,7 @@ export class UsersProvider {
     'password':null,
     'nombre':null,
     'apellido':null,
-    'eventos':[]
+    'eventos':null
   };
 
   constructor(storage: Storage) {
@@ -50,11 +50,24 @@ export class UsersProvider {
   }
 
   saveEvent(evento){
-    this.getUserConnected().then((usuario) => {
-      this.getUser(usuario).then((data) => {
-        data.eventos.push(evento);
-        this.storage.set(usuario,data);
+    try{
+      this.getUserConnected().then((usuario) => {
+        this.getUser(usuario).then((data) => {
+          if(data.eventos != null){
+            data.eventos.push(evento);
+          }
+          else{
+            var eventos = [evento];
+            data.eventos = eventos;
+          }
+
+          this.storage.set(usuario,data);
+        });
       });
-    });
+    }
+    catch(e){
+      console.log(e);
+      throw new Error("Error al grabar el evento.");
+    }
   }  
 }

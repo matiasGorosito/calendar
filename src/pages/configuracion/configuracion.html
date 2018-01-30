@@ -5,14 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>configuracion</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Configuraci&oacute;n</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
+  <div class="div_btn_action">
+    <button ion-button (click)="logOut()" round full>Cerrar Sesi&oacute;n</button>
+  </div>  
 </ion-content>

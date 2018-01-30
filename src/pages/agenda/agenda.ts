@@ -11,52 +11,9 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'agenda.html',
 })
 export class AgendaPage {
-  items = [
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: '11/17/2018', title: '21:30'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-    {
-      title: 'Se casa Gus',
-      content: 'Gustavo Ochoa se casa. AHHHHH PEROOOOO SIIII',
-      icon: 'calendar',
-      time: {subtitle: 'November', title: '17'}
-    },
-  ];
-
+  items = [];
   storage: Storage;
+
   constructor(public navCtrl: NavController, 
             public navParams: NavParams, 
             storage: Storage, 
@@ -64,14 +21,25 @@ export class AgendaPage {
             public usersService: UsersProvider) {
     this.storage = storage;
 
+  }
+
+  ionViewWillEnter() {
+    this.loadEvents();
+  }
+
+  loadEvents(){
     this.usersService.getUserConnected().then((usuario_conectado) => {
       if(usuario_conectado){
         this.usersService.getUser(usuario_conectado).then((data) => {
-          this.showEvents(data.eventos);
+          if(data.eventos){
+            this.showEvents(data.eventos);
+          }
+          else{
+            this.items = [];
+          }
         });
       }
-    });  
-
+    });   
   }
 
   showEvents(eventos){
@@ -87,16 +55,33 @@ export class AgendaPage {
       icon: null,
       time: {subtitle: null, title: null}
     };
-    item.title = data.title;
-    item.content = data.content;
-    item.icon = data.icon;
-    item.time.subtitle = data.mes;
-    item.time.title = data.dia; 
+    var fechaInicio = new Date(Date.parse(data.fecha_inicio));
+    var horaInicio = new Date(Date.parse(data.hora_inicio));
+    
+    item.title = data.titulo;
+    item.content = data.descripcion;
+    item.icon = "calendar";
+    item.time.subtitle = this.formatoFecha(fechaInicio);
+    item.time.title =  this.formatoHora(horaInicio);
     this.items.push(item);
   }
+  
+  agregarEvento(){
+    this.eventsService.agregarEvento(AgendaPage);    
+  }
 
-  agregarEvento(page){
-    this.eventsService.agregarEvento(page);    
+  pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
+
+  formatoFecha(fecha){
+    return this.pad(fecha.getDate(),2,'0') +  '/' + this.pad(fecha.getMonth()+1 ,2,'0') + '/' + fecha.getFullYear();  
+  }
+
+  formatoHora(hora){
+    return this.pad(hora.getHours(),2,'0') + ':' + this.pad(hora.getMinutes(),2,'0');
   }
 
 }

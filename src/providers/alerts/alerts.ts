@@ -21,7 +21,7 @@ export class AlertsProvider {
         {
           text: 'OK',
           handler: () => {
-            if(result=='OK'){
+            if(result=='OK' && redirectPage != null){
               this.navCtrl.setRoot(redirectPage);
             }
           }

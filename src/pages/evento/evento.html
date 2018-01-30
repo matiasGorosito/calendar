@@ -55,6 +55,11 @@
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_fin"></ion-datetime>
     </ion-item>
 
+    <ion-item>
+      <ion-label>Descripci&oacute;n</ion-label>
+      <ion-textarea [(ngModel)]="evento.descripcion"></ion-textarea>
+    </ion-item>
+
     <div class="div_btn_action">
       <button ion-button (click)="guardar()" full round>Guardar</button>
   </div>
