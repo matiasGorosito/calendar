@@ -15,7 +15,7 @@ export class AgendaPage {
   items = [];
   storage: Storage;
   days = [
-      {
+      /*{
         title:"Hoy",
         date: "31/01/2018",
         events:[
@@ -62,13 +62,8 @@ export class AgendaPage {
             icon: 'beer'
           }
         ]
-      }
+      }*/
   ];
-  emptyDay = {
-    title:null,
-    date:null,
-    events:[]
-  }
 
   constructor(public navCtrl: NavController, 
             public navParams: NavParams, 
@@ -106,29 +101,24 @@ export class AgendaPage {
   }
 
   addDay(date){
-    var aDate = date;
+    var aDate = this.datesService.formatoFecha(this.datesService.parse(date));
     var exists = false;
-    var BreakException = {};
-    try{
-      for(let day of this.days){
-        if(day.date == aDate && !exists){
-          exists = true;
-          throw BreakException;
-        }
+    
+    for(let day of this.days){
+      if(day.date == aDate && !exists){
+        exists = true;
+        break;
       }
-    }
-    catch(e){
-      if(e !== BreakException) throw e;
     }
 
     if(!exists){
-      var aDay = this.emptyDay;
+      var aDay = this.emptyDay();
       aDay.title = aDate;
       aDay.date = aDate;
+      this.days.push(aDay);
     }
   }
-
-  addItem(data){
+  /*addItem(data){
     var item = {
       title: null,
       content: null,
@@ -144,10 +134,41 @@ export class AgendaPage {
     item.time.subtitle = this.datesService.formatoFecha(fechaInicio);
     item.time.title =  this.datesService.formatoHora(horaInicio);
     this.items.push(item);
-  }
+  }*/
+
+  addItem(data){
+    var item = this.emptyItem();
+    var fechaInicio = this.datesService.parse(data.fecha_inicio);
+    var horaInicio = this.datesService.parse(data.hora_inicio);
+    
+    item.title = data.titulo;
+    item.content = data.descripcion;
+    item.icon = "calendar";
+    item.time.startDate = this.datesService.formatoFecha(fechaInicio);
+    item.time.startTime =  this.datesService.formatoHora(horaInicio);
+    this.items.push(item);
+  }  
   
   agregarEvento(){
     this.eventsService.agregarEvento(AgendaPage);    
   }
+
+  emptyItem(){
+    return {
+      title: null,
+      content: null,
+      icon: null,
+      time: {startDate: null, startTime: null}
+    };
+  }
+
+  emptyDay(){
+    return {
+      title:null,
+      date:null,
+      events:[]
+    };
+  }
+
 
 }
