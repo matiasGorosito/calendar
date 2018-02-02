@@ -39,8 +39,9 @@ export class LoginPage {
           this.navCtrl.setRoot(AgendaPage);  
         }
       });
-  }
 
+  }
+  
   login(){
     var log = this.log;
 
@@ -50,7 +51,7 @@ export class LoginPage {
         this.alertService.message('OK','Correcto','Ha iniciado sesión en el sitio web correctamente.',AgendaPage);
       }
       else{
-        this.alertService.message('ERROR','Error','Ha ingresado un e-mail y contraseña incorrectos, vuelva a intentarlo nuevamente.',null);
+        this.alertService.message('ERROR','Error','Ha ingresado un e-mail y contraseña incorrectos.',null);
       }
     });
 

@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content padding>
-  <timeline endIcon="call">
+  <!--<timeline endIcon="call">
     <timeline-item *ngFor="let item of items">
       <timeline-time [time]="item.time"></timeline-time>
       <ion-icon [name]="item.icon"></ion-icon>
@@ -28,7 +28,16 @@
       </ion-card>
     </timeline-item>
 
-  </timeline>
+  </timeline>-->
+  <ion-list *ngFor="let day of days">
+    <ion-list-header>{{day.date}}</ion-list-header>
+    <ion-item *ngFor="let event of day.events">
+      <ion-icon item-start name="{{event.icon}}"></ion-icon>
+      <h2>{{event.title}}</h2>
+      <p>{{event.description}}</p>
+      <ion-note item-end>{{event.startTime}}</ion-note>
+    </ion-item>
+  </ion-list>  
   <div *ngIf="items.length == 0">
     <h4>No dispon&eacute;s de ning&uacute;n evento en este momento, pod&eacute;s agregarlos haciendo click en el bot&oacute;n que aparece abajo.</h4>
   </div>

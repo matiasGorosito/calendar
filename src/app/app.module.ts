@@ -25,6 +25,7 @@ import { TimelineItemComponent } from '../components/timeline/timeline';
 import { EventsProvider } from '../providers/events/events';
 import { UsersProvider } from '../providers/users/users';
 import { AlertsProvider } from '../providers/alerts/alerts';
+import { DatesProvider } from '../providers/dates/dates';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AlertsProvider } from '../providers/alerts/alerts';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     EventsProvider,
     UsersProvider,
-    AlertsProvider
+    AlertsProvider,
+    DatesProvider
   ]
 })
 export class AppModule {}

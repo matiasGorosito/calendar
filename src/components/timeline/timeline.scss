@@ -16,9 +16,21 @@
       width: 95%;
       position: relative;
       display: inline-block;
-      border-bottom-color: #0c295a;
+      background-color: color($colors,card);
+      border-bottom-color: color($colors,border-card);
+      border-top-color: color($colors,border-card);
+      border-left-color: color($colors,border-card);
+      border-right-color: color($colors,border-card);
       border-bottom-width: 1px;
       border-bottom-style: solid;
+      border-top-width: 1px;
+      border-top-style: solid;
+      border-left-width: 1px;
+      border-left-style: solid;
+      border-right-width: 1px;
+      border-right-style: solid;      
+      border-radius: 2%;
+      margin-bottom: 5%;
       timeline-time {
         display: block;
         width: 20%;
@@ -118,7 +130,7 @@
           position: relative;
           float: right;
           left: auto;
-          margin: -55px 5px 0 0;
+          margin: -55px 25px 0 0;
           &:after{
             border-left-color: transparent;
             border-top-color: #afdcf8;
@@ -129,7 +141,7 @@
         timeline-time{
           width: 100%;
           position: relative;
-          padding: 0 0 20px 0;
+          padding: 10px 0 20px 0;
           left: 20px;
           span{
             text-align: left;

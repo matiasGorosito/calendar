@@ -64,14 +64,13 @@ a.item-ios:not([detail-none]) .item-inner {
     background: color($colors,back);
   }
 
-  .item-ios {
+  /*.item-ios {
     padding-left: 16px;
     padding-left: 16px;
     border-radius: 0;
     position: relative;
     font-size: 1.7rem;
     color: #000;
-    background-color: color($colors,back);
     -webkit-transition: background-color 200ms linear;
     transition: background-color 200ms linear;
   }
@@ -89,7 +88,7 @@ a.item-ios:not([detail-none]) .item-inner {
     box-shadow: none;
     -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
     transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  }*/
 
   .item-input .label-md,
   .item-select .label-md,
@@ -104,3 +103,21 @@ a.item-ios:not([detail-none]) .item-inner {
   .list-md .item-input:last-child {
     border-bottom: 1px solid #000000;
   }
+
+.item-ios{
+    background-color: color($colors,back-list);
+  }
+
+.item-md{
+    background-color: color($colors,back-list);
+}
+
+ion-menu {
+    .item-ios {
+        background-color: color($colors,back);
+      }
+      
+      .item-md {
+        background-color: color($colors,back);
+      }
+}
