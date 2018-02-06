@@ -93,11 +93,32 @@ export class AgendaPage {
     });   
   }
 
-  showEvents(eventos){
-    for(let data of eventos) {
+  showEvents(events){
+    for(let data of events) {
       this.addDay(data.fecha_inicio);
-      this.addItem(data);
     }
+
+    for(let day of this.getDays()){
+      this.addItems(day,events);
+    }
+  }
+
+  addItems(aDay,events){
+    var auxItems = [];
+    var auxItem = this.emptyItem();
+
+    for(let event of events){
+      var startDate = this.datesService.formatoFecha(this.datesService.parse(event.fecha_inicio));
+      if(startDate == aDay.date){
+        auxItem.description = event.descripcion;
+        auxItem.title = event.titulo;
+        auxItem.startTime = this.datesService.formatoHora(this.datesService.parse(event.hora_inicio));
+        auxItem.icon = 'calendar';
+        auxItems.push(auxItem);
+      }
+    }
+
+    aDay.events = auxItems;
   }
 
   addDay(date){
@@ -115,7 +136,7 @@ export class AgendaPage {
       var aDay = this.emptyDay();
       aDay.title = aDate;
       aDay.date = aDate;
-      this.days.push(aDay);
+      this.pushDays(aDay);
     }
   }
   /*addItem(data){
@@ -136,7 +157,7 @@ export class AgendaPage {
     this.items.push(item);
   }*/
 
-  addItem(data){
+  /*addItem(data){
     var item = this.emptyItem();
     var fechaInicio = this.datesService.parse(data.fecha_inicio);
     var horaInicio = this.datesService.parse(data.hora_inicio);
@@ -147,18 +168,27 @@ export class AgendaPage {
     item.time.startDate = this.datesService.formatoFecha(fechaInicio);
     item.time.startTime =  this.datesService.formatoHora(horaInicio);
     this.items.push(item);
-  }  
+  }  */
   
   agregarEvento(){
     this.eventsService.agregarEvento(AgendaPage);    
   }
 
-  emptyItem(){
+  /*emptyItem(){
     return {
       title: null,
       content: null,
       icon: null,
       time: {startDate: null, startTime: null}
+    };
+  }*/
+
+  emptyItem(){
+    return {
+      title:null,
+      description : null,
+      startTime: null,
+      icon:null
     };
   }
 
@@ -168,6 +198,14 @@ export class AgendaPage {
       date:null,
       events:[]
     };
+  }
+
+  getDays(){
+    return this.days;
+  }
+
+  pushDays(aDay){
+    this.days.push(aDay);
   }
 
 

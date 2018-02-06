@@ -19,6 +19,10 @@ export class DatesProvider {
   }
 
   formatoFecha(fecha){
+    console.log('--------');
+    console.log(fecha.getDate());
+    console.log(fecha);
+    console.log('--------');
     return this.pad(fecha.getDate(),2,'0') +  '/' + this.pad(fecha.getMonth()+1 ,2,'0') + '/' + fecha.getFullYear();  
   }
 

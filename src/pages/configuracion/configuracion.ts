@@ -25,4 +25,9 @@ export class ConfiguracionPage {
     this.usersService.logOut();
     this.navCtrl.setRoot(LoginPage);
   }
+
+  deleteUser(){
+    this.usersService.deleteUser();
+    this.navCtrl.setRoot(LoginPage);
+  }
 }

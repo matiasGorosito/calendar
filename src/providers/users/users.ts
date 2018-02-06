@@ -70,4 +70,11 @@ export class UsersProvider {
       throw new Error("Error al grabar el evento.");
     }
   }  
+
+  deleteUser(){
+    this.getUserConnected().then((usuario) => {
+      this.storage.remove(usuario);
+      this.logOut();
+    });    
+  }
 }
