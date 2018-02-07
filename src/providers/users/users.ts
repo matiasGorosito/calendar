@@ -49,10 +49,15 @@ export class UsersProvider {
     this.storage.remove('usuario_conectado');
   }
 
+  getNewID(eventos){
+    return eventos != null ? eventos.length : 0;
+  }
+
   saveEvent(evento){
     try{
       this.getUserConnected().then((usuario) => {
         this.getUser(usuario).then((data) => {
+          evento.id = this.getNewID(data.eventos);
           if(data.eventos != null){
             data.eventos.push(evento);
           }

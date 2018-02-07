@@ -14,56 +14,7 @@ import { Storage } from '@ionic/storage';
 export class AgendaPage {
   items = [];
   storage: Storage;
-  days = [
-      /*{
-        title:"Hoy",
-        date: "31/01/2018",
-        events:[
-          {
-            title:'Prueba',
-            description : 'Evento de prueba',
-            startTime: '05:50',
-            icon: 'calendar'
-          },
-          {
-            title:'Prueba 2',
-            description : 'Evento de prueba',
-            startTime: '07:50',
-            icon: 'beer'
-          },
-          {
-            title:'Prueba 3',
-            description : 'Evento de prueba',
-            startTime: '08:50',
-            icon: 'football'
-          }
-        ]
-      },
-      {
-        title:"Mañana",
-        date: "01/02/2018",
-        events:[
-          {
-            title:'Prueba 4',
-            description : 'Evento de prueba',
-            startTime: '05:50',
-            icon: 'time'
-          },
-          {
-            title:'Prueba 5',
-            description : 'Evento de prueba',
-            startTime: '07:50',
-            icon: 'calendar'
-          },
-          {
-            title:'Prueba 6',
-            description : 'Evento de prueba',
-            startTime: '08:50',
-            icon: 'beer'
-          }
-        ]
-      }*/
-  ];
+  days = [];
 
   constructor(public navCtrl: NavController, 
             public navParams: NavParams, 
@@ -94,6 +45,7 @@ export class AgendaPage {
   }
 
   showEvents(events){
+    events = this.getActiveEvents(events);
     for(let data of events) {
       this.addDay(data.fecha_inicio);
     }
@@ -103,11 +55,15 @@ export class AgendaPage {
     }
   }
 
+  getActiveEvents(events){
+    return events.filter(event => event.activo);
+  }
+
   addItems(aDay,events){
     var auxItems = [];
-    var auxItem = this.emptyItem();
 
     for(let event of events){
+      var auxItem = this.emptyItem();
       var startDate = this.datesService.formatoFecha(this.datesService.parse(event.fecha_inicio));
       if(startDate == aDay.date){
         auxItem.description = event.descripcion;

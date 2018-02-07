@@ -19,15 +19,11 @@ export class DatesProvider {
   }
 
   formatoFecha(fecha){
-    console.log('--------');
-    console.log(fecha.getDate());
-    console.log(fecha);
-    console.log('--------');
-    return this.pad(fecha.getDate(),2,'0') +  '/' + this.pad(fecha.getMonth()+1 ,2,'0') + '/' + fecha.getFullYear();  
+    return this.pad(fecha.getUTCDate(),2,'0') +  '/' + this.pad(fecha.getUTCMonth()+1 ,2,'0') + '/' + fecha.getUTCFullYear();  
   }
 
   formatoHora(hora){
-    return this.pad(hora.getHours(),2,'0') + ':' + this.pad(hora.getMinutes(),2,'0');
+    return this.pad(hora.getUTCHours(),2,'0') + ':' + this.pad(hora.getUTCMinutes(),2,'0');
   }
 
   parse(fechaString){

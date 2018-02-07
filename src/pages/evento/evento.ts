@@ -39,7 +39,9 @@ export class EventoPage {
       "ubicacion":null,
       "descripcion":null,
       "dia_completo":false,
+      "activo":true
     }
+
     this.paginaOrigen = this.navParams.get('origen');
     this.id = this.navParams.get('id');
 
@@ -58,7 +60,7 @@ export class EventoPage {
       this.alertService.message('ERROR','Datos obligatorios','Todos los datos del formulario son obligatorios. Cargue los campos que estén en blanco.',null);
       return;
     }
-
+    
     try{
       this.usersService.saveEvent(this.evento);
       this.alertService.message('OK','Evento creado','Se ha creado correctamente su evento.',null);
