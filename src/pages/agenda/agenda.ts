@@ -32,16 +32,11 @@ export class AgendaPage {
   }
 
   loadEvents(){
-    this.usersService.getUserConnected().then((usuario_conectado) => {
-      if(usuario_conectado){
-        this.usersService.getUser(usuario_conectado).then((data) => {
-          this.items = [];
-          if(data.eventos){
-            this.showEvents(data.eventos);
-          }
-        });
+    this.usersService.getUserEvents().then((eventos) => {
+      if(eventos){
+        this.showEvents(eventos);
       }
-    });   
+    }); 
   }
 
   showEvents(events){
@@ -70,10 +65,10 @@ export class AgendaPage {
         auxItem.title = event.titulo;
         auxItem.startTime = this.datesService.formatoHora(this.datesService.parse(event.hora_inicio));
         auxItem.icon = 'calendar';
+        auxItem.id = event.id;
         auxItems.push(auxItem);
       }
     }
-
     aDay.events = auxItems;
   }
 
@@ -148,7 +143,8 @@ export class AgendaPage {
       title:null,
       description : null,
       startTime: null,
-      icon:null
+      icon:null,
+      id:null
     };
   }
 

@@ -17,18 +17,18 @@
     
   <ion-list>
     <ion-item>
-      <ion-label>T&iacute;tulo</ion-label>
+      <ion-label color="primary" fixed>T&iacute;tulo</ion-label>
       <ion-input [(ngModel)]="evento.titulo"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Ubicaci&oacute;n</ion-label>
+      <ion-label color="primary" fixed>Ubicaci&oacute;n</ion-label>
       <ion-input [(ngModel)]="evento.ubicacion"></ion-input>
     </ion-item>
   </ion-list>
 
   <ion-list>
     <ion-item>
-      <ion-label>Todo el d&iacute;a</ion-label>
+      <ion-label color="primary">Todo el d&iacute;a</ion-label>
       <!--<ion-checkbox [(ngModel)]="evento.dia_completo" color="dark"></ion-checkbox>-->
       <ion-select [(ngModel)]="evento.dia_completo">
           <ion-option value=true>Si</ion-option>
@@ -36,27 +36,27 @@
         </ion-select>      
     </ion-item>
     <ion-item>
-      <ion-label>Fecha Inicio</ion-label>
+      <ion-label color="primary">Fecha Inicio</ion-label>
       <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
-      <ion-label>Hora Inicio</ion-label>
+      <ion-label color="primary">Hora Inicio</ion-label>
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label>Fecha Fin</ion-label>
+      <ion-label color="primary">Fecha Fin</ion-label>
       <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_fin"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
-      <ion-label>Hora Fin</ion-label>
+      <ion-label color="primary">Hora Fin</ion-label>
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_fin"></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label>Descripci&oacute;n</ion-label>
+      <ion-label color="primary">Descripci&oacute;n</ion-label>
       <ion-textarea [(ngModel)]="evento.descripcion"></ion-textarea>
     </ion-item>
 

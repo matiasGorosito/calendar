@@ -45,8 +45,11 @@ export class EventoPage {
     this.paginaOrigen = this.navParams.get('origen');
     this.id = this.navParams.get('id');
 
-    if(this.id){
+    if(this.id != null){
       this.oper = 'Editar';
+      this.usersService.findUserEvent(this.id).then((evento) => {
+        this.evento = evento;
+      });
     }
     else{
       this.oper = 'Agregar';

@@ -82,4 +82,22 @@ export class UsersProvider {
       this.logOut();
     });    
   }
+
+  getUserEvents(){
+    return this.getUserConnectedData().then((data) =>{
+        return data.eventos;
+      });
+  }  
+
+  getUserConnectedData(){
+    return this.getUserConnected().then((usuario_conectado) => {
+        return this.getUser(usuario_conectado);
+      });
+  }
+
+  findUserEvent(id){
+    return this.getUserEvents().then((data) =>{
+        return data.find(evento => evento.id == id);
+      });
+  }
 }
