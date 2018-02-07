@@ -31,7 +31,7 @@
   </timeline>-->
   <ion-list *ngFor="let day of days">
     <ion-list-header>{{day.date}}</ion-list-header>
-    <ion-item *ngFor="let event of day.events">
+    <ion-item *ngFor="let event of day.events" (click)="editarEvento(event.id)">
       <ion-icon item-start name="{{event.icon}}"></ion-icon>
       <h2>{{event.title}}</h2>
       <p>{{event.description}}</p>

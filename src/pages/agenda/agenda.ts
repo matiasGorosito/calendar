@@ -130,6 +130,10 @@ export class AgendaPage {
     this.eventsService.agregarEvento(AgendaPage);    
   }
 
+  editarEvento(id){
+    this.eventsService.editarEvento(AgendaPage,id);
+  }
+
   /*emptyItem(){
     return {
       title: null,
