@@ -76,6 +76,51 @@ export class UsersProvider {
     }
   }  
 
+  changeEvent2(evento,oper){
+    return this.getUserConnectedData().then((data) => {
+              return data;
+          }).then((data) => {
+              var auxEvents = [];
+              for(let auxEvent of data.eventos){
+                if(auxEvent.id == evento.id){
+                  if(oper == 'edit'){
+                    auxEvents.push(evento);
+                  }
+                }
+                else{
+                  auxEvents.push(auxEvent);
+                }
+              } 
+              
+            data.eventos = auxEvents;
+
+            return this.storage.set(data.usuario,data);      
+          });
+  }
+
+  changeEvent(evento,oper){
+    this.getUserConnected().then((usuario) => {
+        this.getUser(usuario).then((data) => {
+               var auxEvents = [];
+               for(let auxEvent of data.eventos){
+                  if(auxEvent.id == evento.id){
+                    if(oper == 'edit'){
+                      auxEvents.push(evento);
+                    }
+                  }
+                  else{
+                    auxEvents.push(auxEvent);
+                  }
+               } 
+               
+              data.eventos = auxEvents;
+
+              this.storage.set(usuario,data);
+
+            });
+          });
+  }
+
   deleteUser(){
     this.getUserConnected().then((usuario) => {
       this.storage.remove(usuario);
@@ -99,5 +144,10 @@ export class UsersProvider {
     return this.getUserEvents().then((data) =>{
         return data.find(evento => evento.id == id);
       });
+  }
+
+  deleteUserEvent(evento){
+    evento.activo = false;
+    this.changeEvent(evento,'del');
   }
 }
