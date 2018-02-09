@@ -38,22 +38,22 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">Fecha Inicio</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [max]="evento.fecha_fin" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
       <ion-label color="primary">Hora Inicio</ion-label>
-      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_inicio"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label color="primary">Fecha Fin</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_fin"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [min]="evento.fecha_inicio" [(ngModel)]="evento.fecha_fin"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">
       <ion-label color="primary">Hora Fin</ion-label>
-      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.hora_fin"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" pickerFormat="HH:mm" [(ngModel)]="evento.fecha_fin"></ion-datetime>
     </ion-item>
 
     <ion-item>

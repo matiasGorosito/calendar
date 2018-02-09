@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { AlertsProvider } from '../../providers/alerts/alerts';
 
@@ -24,18 +24,16 @@ export class EventoPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public usersService: UsersProvider,
-    public alertService: AlertsProvider) {
+    public alertService: AlertsProvider,
+    public alertCtrl: AlertController) {
     var actualDate = new Date();
     var startTime = new Date(actualDate.setMinutes(0));
-    var endTime = new Date(startTime.setHours(startTime.getHours()+1));
       
     this.evento = {
       "id":null,
       "titulo":null,
       "fecha_inicio":actualDate.toISOString(),
-      "hora_inicio":startTime.toISOString(),
       "fecha_fin":actualDate.toISOString(),
-      "hora_fin":endTime.toISOString(),
       "ubicacion":null,
       "descripcion":null,
       "dia_completo":false,
@@ -80,14 +78,32 @@ export class EventoPage {
   }
 
   eliminar(){
-      this.usersService.changeEvent(this.evento,'del').then((result) => {
-        this.alertService.message('OK','Evento eliminado','Se ha eliminado el evento.',null);
-        this.navCtrl.pop();            
-      }).catch((reason) => {
-        console.log(reason);
-        this.alertService.message('ERROR','Error','Ocurrió un error al eliminar el evento, vuelva a intentarlo.',null);        
-      });
-  
+    let alert = this.alertCtrl.create({
+      title:'Eliminar evento',
+      subTitle:'Desea eliminar el evento?',
+      buttons: [
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.usersService.changeEvent(this.evento,'del').then((result) => {
+              this.alertService.message('OK','Evento eliminado','Se ha eliminado el evento.',null);
+              this.navCtrl.pop();            
+            }).catch((reason) => {
+              console.log(reason);
+              this.alertService.message('ERROR','Error','Ocurrió un error al eliminar el evento, vuelva a intentarlo.',null);        
+            });
+          }  
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        }
+      ]
+    });
+    
+    alert.present();    
   }
 
 }

@@ -13,6 +13,25 @@ export class AlertsProvider {
   constructor(public alertCtrl: AlertController, public navCtrl: NavController) {
   }
 
+  confirm(title,subtitle,handlerOk,handlerCancel){
+    let alert = this.alertCtrl.create({
+      title:title,
+      subTitle:subtitle,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => handlerOk()
+        },
+        {
+          text: 'Cancel',
+          handler: () => handlerCancel()
+        }
+      ]
+    });
+    
+    alert.present();
+  }
+
   message(result,title,subTitle,redirectPage){
     let alert = this.alertCtrl.create({
       title:title,
