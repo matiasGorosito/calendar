@@ -76,7 +76,7 @@ export class UsersProvider {
     }
   }  
 
-  changeEvent2(evento,oper){
+  changeEvent(evento,oper){
     return this.getUserConnectedData().then((data) => {
               return data;
           }).then((data) => {
@@ -95,29 +95,6 @@ export class UsersProvider {
             data.eventos = auxEvents;
 
             return this.storage.set(data.usuario,data);      
-          });
-  }
-
-  changeEvent(evento,oper){
-    this.getUserConnected().then((usuario) => {
-        this.getUser(usuario).then((data) => {
-               var auxEvents = [];
-               for(let auxEvent of data.eventos){
-                  if(auxEvent.id == evento.id){
-                    if(oper == 'edit'){
-                      auxEvents.push(evento);
-                    }
-                  }
-                  else{
-                    auxEvents.push(auxEvent);
-                  }
-               } 
-               
-              data.eventos = auxEvents;
-
-              this.storage.set(usuario,data);
-
-            });
           });
   }
 

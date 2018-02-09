@@ -65,7 +65,7 @@
       <button ion-button (click)="guardar()" full round>Guardar</button>
     </div>
 
-    <div id="div_eliminar"><a (click)="eliminar2()"><u>Eliminar</u></a></div>
+    <div id="div_eliminar" *ngIf="this.oper=='edit'"><a (click)="eliminar()"><u>Eliminar</u></a></div>
   </ion-list>
 
 

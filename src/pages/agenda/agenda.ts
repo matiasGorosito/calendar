@@ -41,6 +41,7 @@ export class AgendaPage {
 
   showEvents(events){
     events = this.getActiveEvents(events);
+    this.clearDays();
     for(let data of events) {
       this.addDay(data.fecha_inicio);
     }
@@ -48,6 +49,10 @@ export class AgendaPage {
     for(let day of this.getDays()){
       this.addItems(day,events);
     }
+  }
+
+  clearDays(){
+    this.days = [];
   }
 
   getActiveEvents(events){

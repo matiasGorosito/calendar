@@ -16,7 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-import { DatePicker } from '@ionic-native/date-picker';
+import { Calendar } from '@ionic-native/calendar';
 
 import { TimelineComponent } from '../components/timeline/timeline';
 import { TimelineTimeComponent } from '../components/timeline/timeline';
@@ -61,7 +61,7 @@ import { DatesProvider } from '../providers/dates/dates';
     StatusBar,
     SplashScreen,
     Storage,
-    DatePicker,
+    Calendar,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     EventsProvider,
     UsersProvider,

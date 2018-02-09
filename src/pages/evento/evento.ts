@@ -79,9 +79,8 @@ export class EventoPage {
     }
   }
 
-  eliminar2(){
-      this.usersService.changeEvent2(this.evento,'del').then((result) => {
-        this.usersService.changeEvent(this.evento,'del');
+  eliminar(){
+      this.usersService.changeEvent(this.evento,'del').then((result) => {
         this.alertService.message('OK','Evento eliminado','Se ha eliminado el evento.',null);
         this.navCtrl.pop();            
       }).catch((reason) => {
@@ -89,16 +88,6 @@ export class EventoPage {
         this.alertService.message('ERROR','Error','Ocurrió un error al eliminar el evento, vuelva a intentarlo.',null);        
       });
   
-  }
-
-  eliminar(){
-      try{
-        this.usersService.changeEvent(this.evento,'del');
-        this.alertService.message('OK','Evento eliminado','Se ha eliminado el evento.',null);
-        this.navCtrl.pop();
-      }catch(e) {
-        this.alertService.message('ERROR','Error','Ocurrió un error al eliminar el evento, vuelva a intentarlo.',null);
-      }
   }
 
 }
