@@ -42,6 +42,7 @@ export class AgendaPage {
   showEvents(events){
     events = this.getActiveEvents(events);
     this.clearDays();
+
     for(let data of events) {
       this.addDay(data.fecha_inicio);
     }
@@ -74,7 +75,7 @@ export class AgendaPage {
         auxItems.push(auxItem);
       }
     }
-    aDay.events = auxItems;
+    aDay.events = this.eventsService.orderEvents(auxItems);
   }
 
   addDay(date){
@@ -95,36 +96,6 @@ export class AgendaPage {
       this.pushDays(aDay);
     }
   }
-  /*addItem(data){
-    var item = {
-      title: null,
-      content: null,
-      icon: null,
-      time: {subtitle: null, title: null}
-    };
-    var fechaInicio = this.datesService.parse(data.fecha_inicio);
-    var horaInicio = this.datesService.parse(data.hora_inicio);
-    
-    item.title = data.titulo;
-    item.content = data.descripcion;
-    item.icon = "calendar";
-    item.time.subtitle = this.datesService.formatoFecha(fechaInicio);
-    item.time.title =  this.datesService.formatoHora(horaInicio);
-    this.items.push(item);
-  }*/
-
-  /*addItem(data){
-    var item = this.emptyItem();
-    var fechaInicio = this.datesService.parse(data.fecha_inicio);
-    var horaInicio = this.datesService.parse(data.hora_inicio);
-    
-    item.title = data.titulo;
-    item.content = data.descripcion;
-    item.icon = "calendar";
-    item.time.startDate = this.datesService.formatoFecha(fechaInicio);
-    item.time.startTime =  this.datesService.formatoHora(horaInicio);
-    this.items.push(item);
-  }  */
   
   agregarEvento(){
     this.eventsService.agregarEvento(AgendaPage);    
@@ -133,15 +104,6 @@ export class AgendaPage {
   editarEvento(id){
     this.eventsService.editarEvento(AgendaPage,id);
   }
-
-  /*emptyItem(){
-    return {
-      title: null,
-      content: null,
-      icon: null,
-      time: {startDate: null, startTime: null}
-    };
-  }*/
 
   emptyItem(){
     return {
@@ -162,7 +124,7 @@ export class AgendaPage {
   }
 
   getDays(){
-    return this.days;
+    return this.eventsService.orderDays(this.days);
   }
 
   pushDays(aDay){

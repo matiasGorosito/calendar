@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { AlertsProvider } from '../../providers/alerts/alerts';
+import { DatesProvider } from '../../providers/dates/dates';
 
 /**
  * Generated class for the EventoPage page.
@@ -12,7 +13,7 @@ import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @Component({
   selector: 'page-evento',
-  providers: [ UsersProvider, AlertsProvider ],
+  providers: [ UsersProvider, AlertsProvider, DatesProvider ],
   templateUrl: 'evento.html',
 })
 export class EventoPage {
@@ -25,9 +26,9 @@ export class EventoPage {
     public navParams: NavParams, 
     public usersService: UsersProvider,
     public alertService: AlertsProvider,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public datesService: DatesProvider) {
     var actualDate = new Date();
-    var startTime = new Date(actualDate.setMinutes(0));
       
     this.evento = {
       "id":null,
@@ -60,6 +61,11 @@ export class EventoPage {
     if(data.titulo == null || data.ubicacion == null || data.descripcion == null){
       this.alertService.message('ERROR','Datos obligatorios','Todos los datos del formulario son obligatorios. Cargue los campos que estén en blanco.',null);
       return;
+    }
+
+    if(data.dia_completo){
+      data.fecha_inicio = this.datesService.setFullDay(data.fecha_inicio);
+      data.fecha_fin = this.datesService.setFullDay(data.fecha_fin);
     }
     
     try{

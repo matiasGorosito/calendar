@@ -29,4 +29,13 @@ export class DatesProvider {
   parse(fechaString){
     return new Date(Date.parse(fechaString));
   }
+  
+  setFullDay(date){
+    let r = this.parse(date);
+    r.setUTCHours(0);
+    r.setUTCMinutes(0);
+    r.setUTCSeconds(0)
+    r.setUTCMilliseconds(0);
+    return r;
+  }
 }

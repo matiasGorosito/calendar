@@ -30,11 +30,7 @@
   <ion-list>
     <ion-item>
       <ion-label color="primary">Todo el d&iacute;a</ion-label>
-      <!--<ion-checkbox [(ngModel)]="evento.dia_completo" color="dark"></ion-checkbox>-->
-      <ion-select [(ngModel)]="evento.dia_completo">
-          <ion-option value=true>Si</ion-option>
-          <ion-option value=false>No</ion-option>
-        </ion-select>      
+      <ion-toggle [(ngModel)]="evento.dia_completo" checked="false"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label color="primary">Fecha Inicio</ion-label>
