@@ -22,6 +22,12 @@
       <ion-input [(ngModel)]="evento.titulo"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label color="primary" fixed>Tipo</ion-label>
+      <ion-select [(ngModel)]="evento.type">
+          <ion-option *ngFor="let t of eventTypes" value="{{t.type}}">{{t.description}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <ion-label color="primary" fixed>Ubicaci&oacute;n</ion-label>
       <ion-input [(ngModel)]="evento.ubicacion"></ion-input>
     </ion-item>

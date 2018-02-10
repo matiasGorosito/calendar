@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { EventsProvider } from '../../providers/events/events';
 import { UsersProvider } from '../../providers/users/users';
 import { DatesProvider } from '../../providers/dates/dates';
+import { EventoPage } from '../evento/evento';
 
 import { Storage } from '@ionic/storage';
 
@@ -98,11 +99,11 @@ export class AgendaPage {
   }
   
   agregarEvento(){
-    this.eventsService.agregarEvento(AgendaPage);    
+    this.eventsService.agregarEvento(EventoPage,AgendaPage);    
   }
 
   editarEvento(id){
-    this.eventsService.editarEvento(AgendaPage,id);
+    this.eventsService.editarEvento(EventoPage,AgendaPage,id);
   }
 
   emptyItem(){

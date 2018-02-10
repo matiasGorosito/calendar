@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { AlertsProvider } from '../../providers/alerts/alerts';
 import { DatesProvider } from '../../providers/dates/dates';
+import { EventsProvider } from '../../providers/events/events';
 
 /**
  * Generated class for the EventoPage page.
@@ -13,7 +14,7 @@ import { DatesProvider } from '../../providers/dates/dates';
 
 @Component({
   selector: 'page-evento',
-  providers: [ UsersProvider, AlertsProvider, DatesProvider ],
+  providers: [ UsersProvider, AlertsProvider, DatesProvider, EventsProvider ],
   templateUrl: 'evento.html',
 })
 export class EventoPage {
@@ -21,13 +22,16 @@ export class EventoPage {
   id;
   oper;
   evento;
+  eventTypes;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public usersService: UsersProvider,
     public alertService: AlertsProvider,
     public alertCtrl: AlertController,
-    public datesService: DatesProvider) {
+    public datesService: DatesProvider,
+    public eventsService: EventsProvider
+  ) {
     var actualDate = new Date();
       
     this.evento = {
@@ -38,9 +42,11 @@ export class EventoPage {
       "ubicacion":null,
       "descripcion":null,
       "dia_completo":false,
-      "activo":true
+      "activo":true,
+      "tipo":null
     }
-
+    
+    this.eventTypes = this.eventsService.getEventTypes();
     this.paginaOrigen = this.navParams.get('origen');
     this.id = this.navParams.get('id');
 

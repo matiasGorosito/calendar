@@ -1,5 +1,4 @@
 import { NavController, NavParams } from 'ionic-angular';
-import { EventoPage } from '../../pages/evento/evento';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
@@ -12,16 +11,45 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class EventsProvider {
   storage: Storage;
+  types;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,storage: Storage) {
     this.storage = storage;
+    this.types = [
+      {
+        type:'evento',
+        description:'Evento',
+        icon:'calendar'
+      },
+      {
+        type:'fiesta',
+        description:'Fiesta',
+        icon:'beer'
+      },
+      {
+        type:'recordatorio',
+        description:'Recordatorio',
+        icon:'checkmark-circle'
+      },
+      {
+        type:'viaje',
+        description:'Viaje',
+        icon:'plane'
+      },
+      {
+        type:'futbol',
+        description:'Fútbol',
+        icon:'football'
+      }
+    ];    
   }
-  agregarEvento(paginaOrigen){
-    this.navCtrl.push(EventoPage,{ origen: paginaOrigen});
+
+  agregarEvento(paginaPush,paginaOrigen){
+    this.navCtrl.push(paginaPush,{ origen: paginaOrigen});
   }  
 
-  editarEvento(paginaOrigen,id){
-    this.navCtrl.push(EventoPage,{ origen:paginaOrigen, id:id});
+  editarEvento(paginaPush,paginaOrigen,id){
+    this.navCtrl.push(paginaPush,{ origen:paginaOrigen, id:id});
   }
 
   compareDates(s1,s2){
@@ -53,6 +81,10 @@ export class EventsProvider {
     return events.sort((e1,e2) => {
       return this.compareHours(e1.startTime,e2.startTime);
     });
+  }
+
+  getEventTypes(){
+    return this.types;
   }
 
 }
