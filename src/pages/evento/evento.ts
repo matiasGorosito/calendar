@@ -81,7 +81,7 @@ export class EventoPage {
       else{
         this.usersService.changeEvent(this.evento,this.oper);
       }
-      this.alertService.message('OK','Evento creado','Se ha guardado correctamente su evento.',null);
+      this.alertService.message('OK','Evento guardado','Se ha guardado correctamente su evento.',null);
       this.navCtrl.pop();//push(this.paginaOrigen);
     }
     catch(e){
@@ -95,7 +95,7 @@ export class EventoPage {
       subTitle:'Desea eliminar el evento?',
       buttons: [
         {
-          text: 'Eliminar',
+          text: 'Confirmar',
           handler: () => {
             this.usersService.changeEvent(this.evento,'del').then((result) => {
               this.alertService.message('OK','Evento eliminado','Se ha eliminado el evento.',null);

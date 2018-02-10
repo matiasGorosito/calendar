@@ -70,9 +70,11 @@ export class AgendaPage {
       if(startDate == aDay.date){
         auxItem.description = event.descripcion;
         auxItem.title = event.titulo;
-        auxItem.startTime = this.datesService.formatoHora(this.datesService.parse(event.fecha_inicio));
-        auxItem.icon = 'calendar';
+        if(!event.dia_completo){
+          auxItem.startTime = this.datesService.formatoHora(this.datesService.parse(event.fecha_inicio));
+        }
         auxItem.id = event.id;
+        auxItem.icon = this.eventsService.findEventIcon(event.tipo).icon;
         auxItems.push(auxItem);
       }
     }

@@ -87,4 +87,8 @@ export class EventsProvider {
     return this.types;
   }
 
+  findEventIcon(type){
+    return this.getEventTypes().find(t => t.type == type);
+  }
+
 }

@@ -54,6 +54,7 @@ export class UsersProvider {
   }
 
   saveEvent(evento){
+    console.log(JSON.stringify(evento));
     try{
       this.getUserConnected().then((usuario) => {
         this.getUser(usuario).then((data) => {
