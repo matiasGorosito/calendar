@@ -1,3 +1,86 @@
 page-mes {
+    .grid{
+      padding-left: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-top: 0px;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-left-radius: 5px;
+    }  
 
+    ion-grid{
+
+      ion-row{
+        ion-col{
+          background-color: color($colors,back-list);
+          border-style: solid;
+          border-top-width: 1px;
+          border-bottom-width: 1px;
+          border-left-width: 1px;
+          border-right-width: 1px;
+          border-color: color($colors,border-card);
+          padding-left: 3px!important;
+          padding-right: 3px!important;
+
+          .cal-day{
+            text-align:left;
+            height: 50px;
+            .cal-number{
+              padding-left: 10%;   
+            }
+            .cal-list{
+              .cal-event{
+                height: 10px;
+                margin-bottom: 5%;
+                font-size: 8px;
+                border-radius: 2px;
+                background-color: #0f00b4;
+                color: #ffffff;
+                padding-left:8%;
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+
+    .calendar-header{
+      text-align: left;
+      font-weight: bold;
+    }
+
+    @media (min-width: 768px){
+        .seven-cols .col-md-1,
+        .seven-cols .col-sm-1,
+        .seven-cols .col-lg-1  {
+          width: 100%;
+          *width: 100%;
+        }
+      }
+      
+    @media (min-width: 992px) {
+        .seven-cols .col-md-1,
+        .seven-cols .col-sm-1,
+        .seven-cols .col-lg-1 {
+          width: 14.285714285714285714285714285714%;
+          *width: 14.285714285714285714285714285714%;
+        }
+      }
+      
+      /**
+       *  The following is not really needed in this case
+       *  Only to demonstrate the usage of @media for large screens
+       */    
+    @media (min-width: 1200px) {
+        .seven-cols .col-md-1,
+        .seven-cols .col-sm-1,
+        .seven-cols .col-lg-1 {
+          width: 14.285714285714285714285714285714%;
+          *width: 14.285714285714285714285714285714%;
+        }
+      }
 }

@@ -33,12 +33,14 @@ export class EventoPage {
     public eventsService: EventsProvider
   ) {
     var actualDate = new Date();
-      
+    var startDate = new Date(actualDate.setMinutes(0));
+    var endDate = new Date(this.datesService.addHoursToDate(new Date(startDate),1));
+
     this.evento = {
       "id":null,
       "titulo":null,
-      "fecha_inicio":actualDate.toISOString(),
-      "fecha_fin":actualDate.toISOString(),
+      "fecha_inicio":startDate.toISOString(),
+      "fecha_fin":endDate.toISOString(),
       "ubicacion":null,
       "descripcion":null,
       "dia_completo":false,

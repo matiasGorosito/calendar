@@ -7,12 +7,116 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>mes</ion-title>
+
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>    
+    <ion-title>{{selectedMonth}} {{selectedYear}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+      
+      <ion-grid>
+          <ion-row align-items-start class="calendar-header">
+            <ion-col *ngFor="let n of namesOfDays">
+              {{n.name}}
+            </ion-col>
+          </ion-row>
+          <ion-row justify-content-start>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>1</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>2</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>3</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>4</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>5</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>6</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col>
+                <div class='cal-day'>
+                  <div class='cal-number'>7</div>
+                  <div class='cal-list'>
+                    <div class='cal-event'>
+                      Fiesta
+                    </div>
+                    <div class='cal-event'>
+                      Evento
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>          
+        </ion-grid>      
 </ion-content>

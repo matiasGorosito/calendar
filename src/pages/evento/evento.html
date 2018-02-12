@@ -41,7 +41,7 @@
     </ion-item>
     <ion-item>
       <ion-label >Fecha Inicio</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" [max]="evento.fecha_fin" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
+      <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="evento.fecha_inicio"></ion-datetime>
     </ion-item>
 
     <ion-item *ngIf="!evento.dia_completo">

@@ -41,7 +41,8 @@ export class EventsProvider {
         description:'Fútbol',
         icon:'football'
       }
-    ];    
+    ];  
+
   }
 
   agregarEvento(paginaPush,paginaOrigen){
@@ -90,5 +91,4 @@ export class EventsProvider {
   findEventIcon(type){
     return this.getEventTypes().find(t => t.type == type);
   }
-
 }
