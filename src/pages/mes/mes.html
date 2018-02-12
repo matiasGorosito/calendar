@@ -12,14 +12,26 @@
         <ion-icon name="menu"></ion-icon>
       </button>    
     <ion-title>{{selectedMonth.name}} {{selectedYear}}</ion-title>
+    <ion-buttons right>
+        <button ion-button (click)="toActualMonth()" large>
+            <ion-icon name="calendar"></ion-icon>
+        </button>
+    </ion-buttons>    
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-      
-      <ion-grid *ngFor="let m of months">
+  <ion-slides (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let m of months">  
+      <!--<button ion-button (click)="toPrevMonth()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <button ion-button (click)="toNextMonth()">
+          <ion-icon name="arrow-forward"></ion-icon>
+      </button>  -->
+      <ion-grid ><!--*ngFor="let m of activeMonths">-->
           <ion-row align-items-start class="calendar-header">
             <ion-col *ngFor="let n of namesOfDays">
               <div [ngClass]="{'cal-day-actual': isActualDay(n.position)}">
@@ -45,6 +57,8 @@
               </ion-col>
           </ion-row>
         </ion-grid> 
+     </ion-slide>   
+  </ion-slides>   
 
         <ion-fab right bottom>
           <button ion-fab (click)="agregarEvento()"><ion-icon name="add"></ion-icon></button>

@@ -169,7 +169,8 @@ export class DatesProvider {
       number: null,
       year: null,
       name: null,
-      weeks: []
+      weeks: [],
+      active: false
     }
   }
 
@@ -287,4 +288,5 @@ export class DatesProvider {
   lastDayOfMonth(y,m){
     return new Date(y,m+1,0,0,0,0,0);
   }
+
 }

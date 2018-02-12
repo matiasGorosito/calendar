@@ -29,6 +29,8 @@ export class MesPage {
   selectedMonth;
   selectedYear;
   months = [];
+  activeMonths = [];
+  slideIndex;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public eventsService: EventsProvider,
@@ -36,15 +38,88 @@ export class MesPage {
     public datesService: DatesProvider) {
       this.namesOfMonths = this.datesService.getNamesOfMonths();
       this.namesOfDays = this.datesService.getNamesOfDays();
-      this.selectedMonth = this.namesOfMonths.find(m => m.number == this.actualDate.getMonth());
-      this.selectedYear = this.actualDate.getFullYear();
-      this.datesService.getMonth(this.selectedYear,this.selectedMonth.number).then((month) => {
-        this.months.push(month);
-      });
+      
+      /*this.selectedMonth = this.namesOfMonths.find(m => m.number == this.actualDate.getMonth());
+      this.selectedYear = this.actualDate.getFullYear();*/
+      this.loadMonth(this.actualDate.getFullYear(),this.actualDate.getMonth());
   }
 
-  loadVisibleMonths(){
-    
+  loadMonth(y,m){
+    this.selectedMonth = this.namesOfMonths.find(aux => aux.number == m);
+    this.selectedYear = y;
+    let prev = this.getPrevMonth(y,m);
+    let next = this.getNextMonth(y,m);
+
+    this.datesService.getMonth(prev.year,prev.month).then((month) => {
+      this.months.push(month);
+    });
+    this.datesService.getMonth(y,m).then((month) => {
+      month.active = true;
+      //this.activeMonths.push(month);
+      this.months.push(month);
+    });
+    this.datesService.getMonth(next.year,next.month).then((month) => {
+      this.months.push(month);
+    });
+  }
+
+  toActualMonth(){
+    let actual = this.getActualMonth();
+    this.loadMonth(actual.year,actual.month);
+  }
+
+  toPrevMonth(){
+    let prev = this.getPrevMonth(this.selectedYear,this.selectedMonth.number);
+    this.loadMonth(prev.year,prev.month);
+  }
+  
+  toNextMonth(){
+    let next = this.getNextMonth(this.selectedYear,this.selectedMonth.number);
+    this.loadMonth(next.year,next.month);
+  }
+
+  getActualMonth(){
+    let a = {
+      'year':null,
+      'month':null
+    }
+    a.year = this.actualDate.getFullYear();
+    a.month = this.actualDate.getMonth();
+    return a;
+  }
+
+  getPrevMonth(y,m){
+    let a = {
+      'year':null,
+      'month':null
+    }
+    a.year = m==0?y-1:y;
+    a.month = m==0?11:m-1;
+    return a;
+  }
+  
+  getNextMonth(y,m){
+    let a = {
+      'year':null,
+      'month':null
+    }
+    a.year = m==11?y+1:y;
+    a.month = m==11?0:m+1;
+    return a;
+  }
+
+  slideChanged(){   
+      let currentIndex = this.slides.getActiveIndex();
+      if(this.slideIndex > currentIndex){ //Se corrió a mes anterior
+        let prev = this.getPrevMonth(this.selectedYear,this.selectedMonth.number);
+        this.loadMonth(prev.year,prev.month);
+      }
+      else{
+        let next = this.getNextMonth(this.selectedYear,this.selectedMonth.number);
+        this.loadMonth(next.year,next.month);
+      }
+      this.slides.update();
+      this.slideIndex = currentIndex;
   }
 
   agregarEvento(){
