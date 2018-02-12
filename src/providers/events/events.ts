@@ -80,7 +80,21 @@ export class EventsProvider {
 
   orderEvents(events){
     return events.sort((e1,e2) => {
-      return this.compareHours(e1.startTime,e2.startTime);
+      let ret;
+      if(e1.startTime == null && e2.startTime == null){
+        ret = 0;
+      }
+      else if(e1.startTime == null && e2.startTime != null){
+        ret = -1;
+      }
+      else if(e1.startTime != null && e2.startTime == null){
+        ret = 1;
+      }
+      else{
+        ret = this.compareHours(e1.startTime,e2.startTime);
+      }
+      
+      return ret;
     });
   }
 

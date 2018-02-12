@@ -27,12 +27,20 @@ page-mes {
           .cal-day{
             text-align:left;
             height: 70px;
-            .cal-number, .cal-number-active{
+
+            .cal-number{
               padding-left: 10%; 
             }  
             .cal-number-active{
               font-weight: bold;
             }
+            .cal-number-noactive{
+              font-weight: normal;
+            }
+            .cal-number-actual{
+              color: color($colors,primary);
+            }
+            
             .cal-list{
               padding-top: 5%;
               .cal-event{
@@ -43,6 +51,15 @@ page-mes {
                 background-color: #0f00b4;
                 color: #ffffff;
                 padding-left:8%;
+
+                p {
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  max-width: 30px;
+                  margin-bottom: 0px;
+                  margin-top: 0px;
+                }
               }
             }
           }
@@ -55,6 +72,9 @@ page-mes {
     .calendar-header{
       text-align: left;
       font-weight: bold;
+      .cal-day-actual{
+        color: color($colors,primary);
+      }
     }
 
     @media (min-width: 768px){

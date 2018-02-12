@@ -112,6 +112,28 @@ export class UsersProvider {
       });
   }  
 
+  getUserEventsByDateRange(from,to){
+    return this.getUserEvents().then((events) => {
+      return events.filter(e => this.parseDate(e.fecha_inicio) >= from && this.parseDate(e.fecha_inicio) <= to);
+    });
+  }
+
+  getUserEventsByDate(date){
+    return this.getUserEvents().then((events) => {
+      return events.filter(e => this.getDateWithOutTime(this.parseDate(e.fecha_inicio)) == date);
+    });
+  }
+
+  parseDate(string){
+    return new Date(Date.parse(string));
+  }
+
+  getDateWithOutTime(date){
+    let aux = date;
+    aux.setUTCHours(0,0,0,0);
+    return aux;
+  }
+
   getUserConnectedData(){
     return this.getUserConnected().then((usuario_conectado) => {
         return this.getUser(usuario_conectado);
