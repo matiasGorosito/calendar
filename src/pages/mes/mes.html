@@ -11,7 +11,7 @@
     <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>    
-    <ion-title>{{selectedMonth}} {{selectedYear}}</ion-title>
+    <ion-title>{{selectedMonth.name}} {{selectedYear}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,13 +19,25 @@
 
 <ion-content padding>
       
-      <ion-grid>
+      <ion-grid *ngFor="let m of months">
           <ion-row align-items-start class="calendar-header">
             <ion-col *ngFor="let n of namesOfDays">
               {{n.name}}
             </ion-col>
           </ion-row>
-          <ion-row justify-content-start>
+          <ion-row justify-content-start *ngFor="let w of m.weeks">
+              <ion-col *ngFor="let d of w.days">
+                <div class='cal-day'>
+                  <div [class]="d.numberMonth==selectedMonth.number ? 'cal-number-active' : 'cal-number'">{{d.position}}</div>
+                  <div class='cal-list'>
+                    <div class='cal-event' *ngFor="let e of d.events">
+                      {{e.description}}
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+          </ion-row>
+<!--          <ion-row justify-content-start>
               <ion-col>
                 <div class='cal-day'>
                   <div class='cal-number'>1</div>
@@ -117,6 +129,6 @@
                   </div>
                 </div>
               </ion-col>
-            </ion-row>          
+            </ion-row>          -->
         </ion-grid>      
 </ion-content>

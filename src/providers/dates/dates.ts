@@ -11,9 +11,11 @@ export class DatesProvider {
   namesOfDays;
   namesOfMonths;
   daysInWeek = 7;
+  weeksForMonth;
 
   constructor() {
-    
+    this.weeksForMonth = 5;
+
     this.namesOfDays = [
       {
         name: 'lun',
@@ -154,10 +156,12 @@ export class DatesProvider {
 
   emptyDay(){
     return {
-      position: null,
       number: null,
-      name: null,
-      events: []
+      numberMonth: null,
+      position: null,
+      events: [{
+        'description':'Evento'
+      }]
     }
   }
 
@@ -171,26 +175,49 @@ export class DatesProvider {
   }
 
   getDayData(n){
-    return this.getNamesOfDays().find(d => d.number == n);
+    return this.getNamesOfDays().find(d => d.position == n);
   }
 
   getMonthData(n){
     return this.getNamesOfMonths().find(m => m.number == n);
   }
 
-  getWeek(id,firstDay,lastDay,position){
+  getWeek(y,m,id,firstDayWeek,lastDayWeek,position){
     let auxWeek = this.emptyWeek();
     auxWeek.id = id;
-    for(var i = firstDay; i < lastDay; i++){
+
+    let lastDayPrevMonth = new Date(y,m,0);
+
+    for(var f = 0; f < firstDayWeek && firstDayWeek > 0; f++){
       let auxDay = this.emptyDay();
-      auxDay.number = i;
-      let dayData = this.getDayData(i);
-      auxDay.name = dayData.name;
-      position = position + 1;
-      auxDay.position = position;
+      auxDay.number = f;
+      auxDay.position = lastDayPrevMonth.getDate() - firstDayWeek + f + 1;
+      auxDay.numberMonth = m-1;
       //Buscar eventos del día
       auxWeek.days.push(auxDay);
     }
+
+    for(var i = firstDayWeek; i < lastDayWeek; i++){
+      let auxDay = this.emptyDay();
+      auxDay.number = i;
+      /*let dayData = this.getDayData(i);
+      auxDay.name = dayData.name;*/
+      position = position + 1;
+      auxDay.position = position;
+      auxDay.numberMonth = m;
+      //Buscar eventos del día
+      auxWeek.days.push(auxDay);
+    }
+
+    let firstDayNextMonth = new Date(y,m+1,1);
+    for(var l = lastDayWeek; l < this.daysInWeek && lastDayWeek < this.daysInWeek; l++){
+      let auxDay = this.emptyDay();
+      auxDay.number = l;
+      auxDay.position = firstDayNextMonth.getDate() + l - lastDayWeek;
+      auxDay.numberMonth = m + 1;
+      //Buscar eventos del día
+      auxWeek.days.push(auxDay);
+    }    
 
     return auxWeek;
   }
@@ -200,27 +227,32 @@ export class DatesProvider {
     let weeks = [];
     let firstDay = new Date(y,m,1);
     let lastDay = new Date(y,m+1,0);
-    let countWeeks = Math.ceil(lastDay.getDate() / this.daysInWeek);
+    let countWeeks = this.getWeeksForMonth();
     let pos = 0;
-
-    let firstWeek = this.getWeek(0,firstDay.getDay(),this.daysInWeek,pos);
-    pos = firstWeek.days.length;
+    
+    let firstWeek = this.getWeek(y,m,0,firstDay.getDay(),this.daysInWeek,pos);
+    pos = this.daysInWeek - firstDay.getDay();
     weeks.push(firstWeek);
-
+    
     for(var w = 1; w < countWeeks-1; w++){
-      let auxWeek = this.getWeek(w,0,this.daysInWeek,pos);
+      let auxWeek = this.getWeek(y,m,w,0,this.daysInWeek,pos);
       pos = pos + auxWeek.days.length;
       weeks.push(auxWeek);
     }
 
-    let lastWeek = this.getWeek(countWeeks-1,0,lastDay.getDay(),pos);
+    let lastWeek = this.getWeek(y,m,countWeeks-1,0,lastDay.getDay()+1,pos);
     weeks.push(lastWeek);
+
     month.weeks = weeks;
-    let monthData = this.getMonthData(m-1);
+    let monthData = this.getMonthData(m);
     month.name = monthData.name;
-    month.number = m - 1;
+    month.number = m;
     month.year = y;
 
     return month;
+  }
+
+  getWeeksForMonth(){
+    return this.weeksForMonth;
   }
 }

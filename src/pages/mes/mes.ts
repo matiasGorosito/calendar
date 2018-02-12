@@ -35,8 +35,10 @@ export class MesPage {
     public datesService: DatesProvider) {
       this.namesOfMonths = this.datesService.getNamesOfMonths();
       this.namesOfDays = this.datesService.getNamesOfDays();
-      this.selectedMonth = this.namesOfMonths.find(m => m.number == this.actualDate.getMonth()).name;
+      this.selectedMonth = this.namesOfMonths.find(m => m.number == this.actualDate.getMonth());
       this.selectedYear = this.actualDate.getFullYear();
+      let auxMonth = this.datesService.getMonth(this.selectedYear,this.selectedMonth.number);
+      this.months.push(auxMonth);
   }
 
 

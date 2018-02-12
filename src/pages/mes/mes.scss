@@ -26,11 +26,15 @@ page-mes {
 
           .cal-day{
             text-align:left;
-            height: 50px;
-            .cal-number{
-              padding-left: 10%;   
+            height: 70px;
+            .cal-number, .cal-number-active{
+              padding-left: 10%; 
+            }  
+            .cal-number-active{
+              font-weight: bold;
             }
             .cal-list{
+              padding-top: 5%;
               .cal-event{
                 height: 10px;
                 margin-bottom: 5%;
