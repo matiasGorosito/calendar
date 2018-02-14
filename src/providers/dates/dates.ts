@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UsersProvider } from '../users/users';
+import { EventsProvider } from '../events/events';
 
 /*
   Generated class for the DatesProvider provider.
@@ -11,11 +12,12 @@ import { UsersProvider } from '../users/users';
 export class DatesProvider {
   namesOfDays;
   namesOfMonths;
-  daysInWeek = 7;
+  private daysInWeek = 7;
   weeksForMonth;
+  private daysForScroll = 15;
 
-  constructor(public usersService: UsersProvider) {
-    this.weeksForMonth = 5;
+  constructor(public usersService: UsersProvider, public eventsService: EventsProvider) {
+    this.weeksForMonth = 6;
 
     this.namesOfDays = [
       {
@@ -148,6 +150,10 @@ export class DatesProvider {
     return this.namesOfMonths;
   }
 
+  getDaysForScroll(){
+    return this.daysForScroll;
+  }
+
   emptyWeek(){
     return {
       id:null,
@@ -198,7 +204,7 @@ export class DatesProvider {
     return events.filter(e => this.getDateWithOutTime(this.parse(e.fecha_inicio)).valueOf() == this.getDateWithOutTime(date).valueOf());
   }
 
-  getWeek(y,m,id,firstDayWeek,lastDayWeek,position,events){
+  getWeek(y,m,id,firstDayWeek,lastDayWeek,position,events,isChangeInWeek){
     let auxDate;
     let auxWeek = this.emptyWeek();
     auxWeek.id = id;
@@ -218,12 +224,17 @@ export class DatesProvider {
     for(var i = firstDayWeek; i < lastDayWeek; i++){
       let auxDay = this.emptyDay();
       auxDay.number = i;
-      /*let dayData = this.getDayData(i);
-      auxDay.name = dayData.name;*/
       position = position + 1;
       auxDay.position = position;
-      auxDay.numberMonth = m;
-      auxDate = new Date(y,m,position,0,0,0,0);
+      if(isChangeInWeek){
+        let nextMonth = this.getNextMonth(y,m);
+        auxDay.numberMonth = nextMonth.month;
+        auxDate = new Date(nextMonth.month.year,nextMonth.month,position,0,0,0,0);
+      }
+      else{
+        auxDay.numberMonth = m;
+        auxDate = new Date(y,m,position,0,0,0,0);
+      }
       auxDay.events = this.getEventsOfDay(events,auxDate);
       auxWeek.days.push(auxDay);
     }
@@ -254,18 +265,46 @@ export class DatesProvider {
     let to = this.addDays(lastDay,this.daysInWeek);
 
     return this.usersService.getUserEventsByDateRange(from,to).then((events)=>{
-      let firstWeek = this.getWeek(y,m,0,firstDay.getDay(),this.daysInWeek,pos,events);
+      let firstWeek = this.getWeek(y,m,0,firstDay.getDay(),this.daysInWeek,pos,events,false);
       pos = this.daysInWeek - firstDay.getDay();
       weeks.push(firstWeek);
       
-      for(var w = 1; w < countWeeks-1; w++){
-        let auxWeek = this.getWeek(y,m,w,0,this.daysInWeek,pos,events);
+      for(var w = 1; w < countWeeks-2; w++){
+        let auxWeek = this.getWeek(y,m,w,0,this.daysInWeek,pos,events,false);
         pos = pos + auxWeek.days.length;
         weeks.push(auxWeek);
       }
-  
-      let lastWeek = this.getWeek(y,m,countWeeks-1,0,lastDay.getDay()+1,pos,events);
-      weeks.push(lastWeek);
+      let penultimateWeek;
+      if(pos+this.daysInWeek <= lastDay.getDate()){
+        penultimateWeek = this.getWeek(y,m,countWeeks-2,0,this.daysInWeek,pos,events,false);
+        if(pos + this.daysInWeek == lastDay.getDate()){
+          pos = 0;
+        }
+        else{
+          pos = pos + this.daysInWeek;
+        }
+        weeks.push(penultimateWeek);
+      }
+      else{
+        penultimateWeek = this.getWeek(y,m,countWeeks-2,0,lastDay.getDay()+1,pos,events,false);
+        pos = this.daysInWeek - 1 - lastDay.getDay();
+        weeks.push(penultimateWeek);
+      }
+
+      let lastWeek;
+      if(pos+this.daysInWeek <= lastDay.getDate()){
+        lastWeek = this.getWeek(y,m,countWeeks-1,0,this.daysInWeek,pos,events,true);
+        pos = pos + this.daysInWeek;
+        weeks.push(lastWeek);
+      }
+      else{
+        lastWeek = this.getWeek(y,m,countWeeks-1,0,lastDay.getDay()+1,pos,events,false);
+        pos = this.daysInWeek - 1 - lastDay.getDay();
+        weeks.push(lastWeek);
+      }      
+
+      /*let lastWeek = this.getWeek(y,m,countWeeks-1,0,lastDay.getDay()+1,pos,events);
+      weeks.push(lastWeek);*/
   
       month.weeks = weeks;
       let monthData = this.getMonthData(m);
@@ -275,6 +314,68 @@ export class DatesProvider {
   
       return month;
     });
+  }
+
+  getDays(from,to){
+    let days = [];
+    return this.usersService.getUserEventsByDateRange(from,to).then((events) => {
+      for(let data of events) {
+        var aDate = this.formatoFecha(this.parse(data.fecha_inicio));
+        var exists = false;
+        
+        for(let day of days){
+          if(day.date == aDate && !exists){
+            exists = true;
+            break;
+          }
+        }
+    
+        if(!exists){
+          var aDay = {
+            title:null,
+            date:null,
+            events:[]
+          };
+          aDay.title = this.generateTitle(aDate);
+          aDay.date = aDate;
+          days.push(aDay);
+        }
+      }
+      
+      days = this.eventsService.orderDays(days);
+
+      for(let day of days){
+        var auxItems = [];
+    
+        for(let event of events){
+          var auxItem = this.emptyItem();
+          var startDate = this.formatoFecha(this.parse(event.fecha_inicio));
+          if(startDate == day.date){
+            auxItem.description = event.descripcion;
+            auxItem.title = event.titulo;
+            if(!event.dia_completo){
+              auxItem.startTime = this.formatoHora(this.parse(event.fecha_inicio));
+            }
+            auxItem.id = event.id;
+            auxItem.icon = this.eventsService.findEventIcon(event.tipo).icon;
+            auxItems.push(auxItem);
+          }
+        }
+        day.events = this.eventsService.orderEvents(auxItems);        
+      }      
+
+      return days;
+    });
+  }
+
+  emptyItem(){
+    return {
+      title:null,
+      description : null,
+      startTime: null,
+      icon:null,
+      id:null
+    };
   }
 
   getWeeksForMonth(){
@@ -288,5 +389,75 @@ export class DatesProvider {
   lastDayOfMonth(y,m){
     return new Date(y,m+1,0,0,0,0,0);
   }
+
+  generateDays(from,to){
+    let days = [];
+    for(let d=from ; d <= to; d.setDate(d.getDate()+1)){
+      days.push({
+        title:d,
+        date:d,
+        events:[]
+      });
+    }
+
+    return days;
+  }
+
+  getActualDay(){
+    let actualDate = new Date();
+    return {    
+      day: {
+        position:actualDate.getDay(),
+        number:actualDate.getDate()
+      },
+      month: {
+        number: actualDate.getMonth(),
+        year: actualDate.getFullYear(),
+        name: this.namesOfMonths.find(aux => aux.number == actualDate.getMonth()).name
+      }
+    };
+  }    
+
+  generateTitle(date){
+    var today = this.formatoFecha(this.parse(new Date()));
+    var yesterday = this.formatoFecha(this.parse(this.addDays(new Date(),-1)));
+    var tomorrow = this.formatoFecha(this.parse(this.addDays(new Date(),1)));
+    var ret;
+
+    if(today == date){
+      ret = 'Hoy';
+    }
+    else if(yesterday == date){
+      ret = 'Ayer';
+    }
+    else if(tomorrow == date){
+      ret = 'Mañana';
+    }
+    else{
+      ret = date;
+    }
+
+    return ret;    
+  }
+
+  getPrevMonth(y,m){
+    let a = {
+      'year':null,
+      'month':null
+    }
+    a.year = m==0?y-1:y;
+    a.month = m==0?11:m-1;
+    return a;
+  }
+  
+  getNextMonth(y,m){
+    let a = {
+      'year':null,
+      'month':null
+    }
+    a.year = m==11?y+1:y;
+    a.month = m==11?0:m+1;
+    return a;
+  }  
 
 }

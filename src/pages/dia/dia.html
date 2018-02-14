@@ -7,9 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>dia</ion-title>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>    
+    <ion-title>{{activeDay.day.position}} {{activeDay.month.name}} {{activeDay.month.year}}</ion-title>
+    <ion-buttons right>
+        <button ion-button (click)="toActualMonth()" large>
+            <ion-icon name="calendar"></ion-icon>
+        </button>
+    </ion-buttons>    
   </ion-navbar>
-
 </ion-header>
 
 

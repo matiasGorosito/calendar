@@ -30,7 +30,6 @@ export class MesPage {
   selectedYear;
   months = [];
   activeMonths = [];
-  slideIndex;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public eventsService: EventsProvider,
@@ -39,87 +38,122 @@ export class MesPage {
       this.namesOfMonths = this.datesService.getNamesOfMonths();
       this.namesOfDays = this.datesService.getNamesOfDays();
       
-      /*this.selectedMonth = this.namesOfMonths.find(m => m.number == this.actualDate.getMonth());
-      this.selectedYear = this.actualDate.getFullYear();*/
-      this.loadMonth(this.actualDate.getFullYear(),this.actualDate.getMonth());
+      let y = this.actualDate.getFullYear(), 
+          m = this.actualDate.getMonth()
+      /*let prev = this.datesService.getPrevMonth(y,m),
+          next = this.datesService.getNextMonth(y,m);*/
+      //this.loadMonthFirst(prev.year,prev.month);
+      this.loadMonth(y,m);
+      /*this.loadMonth(next.year,next.month);
+      prev = this.getPrevMonth(prev.year,prev.month),
+      next = this.getNextMonth(next.year,next.month);
+      this.loadMonthFirst(prev.year,prev.month);
+      this.loadMonth(next.year,next.month);*/
+      this.setActiveMonth(y,m);
+  }
+
+  ionViewWillEnter() {
+    this.toActiveMonth();
   }
 
   loadMonth(y,m){
-    this.selectedMonth = this.namesOfMonths.find(aux => aux.number == m);
-    this.selectedYear = y;
-    let prev = this.getPrevMonth(y,m);
-    let next = this.getNextMonth(y,m);
-
-    this.datesService.getMonth(prev.year,prev.month).then((month) => {
-      this.months.push(month);
-    });
     this.datesService.getMonth(y,m).then((month) => {
       month.active = true;
-      //this.activeMonths.push(month);
+      this.activeMonths = [month];
       this.months.push(month);
     });
-    this.datesService.getMonth(next.year,next.month).then((month) => {
-      this.months.push(month);
+  }
+
+  loadMonthFirst(y,m){
+    this.datesService.getMonth(y,m).then((month) => {
+      month.active = true;
+      let auxMonths = [];
+      auxMonths.push(month);
+      for(let mo of this.months){
+        auxMonths.push(mo);
+      }
+      this.months = auxMonths;
     });
+  }
+
+  slideChanged(){   
+      let currentIndex = this.slides.getActiveIndex();
+      let previousIndex = this.slides.getPreviousIndex();
+      //alert('currentIndex: '+currentIndex+' getActiveIndex(): '+this.slides.getActiveIndex()+' getPreviousIndex(): '+this.slides.getPreviousIndex());
+      if(previousIndex > currentIndex){ //Se corrió a mes anterior
+        
+        let prev = this.datesService.getPrevMonth(this.getActiveMonth().year,this.getActiveMonth().month.number);
+        this.setActiveMonth(prev.year,prev.month);
+        prev = this.datesService.getPrevMonth(prev.year,prev.month);
+        if(!this.isLoaded(prev)){
+          this.loadMonthFirst(prev.year,prev.month);
+        }
+      }
+      else{
+        let next = this.datesService.getNextMonth(this.getActiveMonth().year,this.getActiveMonth().month.number);
+        this.setActiveMonth(next.year,next.month);
+        next = this.datesService.getNextMonth(next.year,next.month);
+        if(!this.isLoaded(next)){
+          this.loadMonth(next.year,next.month);
+        }
+      }
+      this.slides.update();
+  }
+
+  isLoaded(param){
+    for(let mo of this.months){
+      if(mo.year == param.year && mo.number == param.month){
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
+  setActiveMonth(y,m){
+    this.selectedMonth = this.namesOfMonths.find(aux => aux.number == m);
+    this.selectedYear = y;    
+  }
+
+  getActiveMonth(){
+    return {
+      'year': this.selectedYear,
+      'month': this.selectedMonth
+    };
+  }
+
+  toActiveMonth(){
+    let y = this.getActiveMonth().year;
+    let m = this.getActiveMonth().month.number;
+    this.loadMonth(y,m);
   }
 
   toActualMonth(){
     let actual = this.getActualMonth();
     this.loadMonth(actual.year,actual.month);
+    this.setActiveMonth(actual.year,actual.month);
   }
 
   toPrevMonth(){
-    let prev = this.getPrevMonth(this.selectedYear,this.selectedMonth.number);
+    let prev = this.datesService.getPrevMonth(this.selectedYear,this.selectedMonth.number);
     this.loadMonth(prev.year,prev.month);
+    this.setActiveMonth(prev.year,prev.month);
+    //this.slides.slidePrev(500);
   }
   
   toNextMonth(){
-    let next = this.getNextMonth(this.selectedYear,this.selectedMonth.number);
+    let next = this.datesService.getNextMonth(this.selectedYear,this.selectedMonth.number);
     this.loadMonth(next.year,next.month);
+    this.setActiveMonth(next.year,next.month);
+    //this.slides.slideNext(500);
   }
 
   getActualMonth(){
-    let a = {
-      'year':null,
-      'month':null
-    }
-    a.year = this.actualDate.getFullYear();
-    a.month = this.actualDate.getMonth();
-    return a;
-  }
-
-  getPrevMonth(y,m){
-    let a = {
-      'year':null,
-      'month':null
-    }
-    a.year = m==0?y-1:y;
-    a.month = m==0?11:m-1;
-    return a;
-  }
-  
-  getNextMonth(y,m){
-    let a = {
-      'year':null,
-      'month':null
-    }
-    a.year = m==11?y+1:y;
-    a.month = m==11?0:m+1;
-    return a;
-  }
-
-  slideChanged(){   
-      let currentIndex = this.slides.getActiveIndex();
-      if(this.slideIndex > currentIndex){ //Se corrió a mes anterior
-        let prev = this.getPrevMonth(this.selectedYear,this.selectedMonth.number);
-        this.loadMonth(prev.year,prev.month);
-      }
-      else{
-        let next = this.getNextMonth(this.selectedYear,this.selectedMonth.number);
-        this.loadMonth(next.year,next.month);
-      }
-      this.slides.update();
-      this.slideIndex = currentIndex;
+    return {
+      'year':this.actualDate.getFullYear(),
+      'month':this.actualDate.getMonth()
+    };
   }
 
   agregarEvento(){
@@ -130,8 +164,19 @@ export class MesPage {
     this.eventsService.editarEvento(EventoPage,MesPage,id);
   }
 
-  verDia(positionDay,numberMonth,year){
-    this.navCtrl.push(DiaPage,{day:positionDay,numberMonth:numberMonth,year:year});
+  verDia(d,m){
+    let selectedDay = {
+      day: {
+        position:d.position,
+        number:d.number
+      },
+      month: {
+        number: m.number,
+        year: m.year,
+        name: m.name
+      }
+    };
+    this.navCtrl.push(DiaPage,{day:selectedDay});
   }
 
   isActiveNumber(n){

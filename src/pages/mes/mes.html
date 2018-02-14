@@ -13,6 +13,12 @@
       </button>    
     <ion-title>{{selectedMonth.name}} {{selectedYear}}</ion-title>
     <ion-buttons right>
+        <button ion-button (click)="toPrevMonth()" round>
+            <ion-icon name="arrow-dropleft-circle"></ion-icon>
+        </button>
+        <button ion-button (click)="toNextMonth()" round>
+            <ion-icon name="arrow-dropright-circle"></ion-icon>
+        </button>
         <button ion-button (click)="toActualMonth()" large>
             <ion-icon name="calendar"></ion-icon>
         </button>
@@ -23,15 +29,9 @@
 
 
 <ion-content padding>
-  <ion-slides (ionSlideDidChange)="slideChanged()">
-    <ion-slide *ngFor="let m of months">  
-      <!--<button ion-button (click)="toPrevMonth()">
-          <ion-icon name="arrow-back"></ion-icon>
-      </button>
-      <button ion-button (click)="toNextMonth()">
-          <ion-icon name="arrow-forward"></ion-icon>
-      </button>  -->
-      <ion-grid ><!--*ngFor="let m of activeMonths">-->
+  <!--<ion-slides (ionSlideDidChange)="slideChanged()" effect="coverflow">
+    <ion-slide *ngFor="let m of months">  -->
+      <ion-grid *ngFor="let m of activeMonths">
           <ion-row align-items-start class="calendar-header">
             <ion-col *ngFor="let n of namesOfDays">
               <div [ngClass]="{'cal-day-actual': isActualDay(n.position)}">
@@ -41,7 +41,7 @@
           </ion-row>
           <ion-row justify-content-start *ngFor="let w of m.weeks">
               <ion-col *ngFor="let d of w.days">
-                <div class='cal-day' (click)="verDia(d.position,d.numberMonth,m.year)">
+                <div class='cal-day'>
                   <div [ngClass]="{'cal-number-active' : isActiveNumber(d.numberMonth), 
                                    'cal-number-noactive': !isActiveNumber(d.numberMonth),
                                    'cal-number': true,
@@ -50,15 +50,15 @@
                   </div>
                   <div class='cal-list'>
                     <div class='cal-event' *ngFor="let e of d.events">
-                      <p>{{e.titulo}}</p>
+                      <p (click)="editarEvento(e.id)">{{e.titulo}}</p>
                     </div>
                   </div>
                 </div>
               </ion-col>
           </ion-row>
         </ion-grid> 
-     </ion-slide>   
-  </ion-slides>   
+     <!--</ion-slide>   
+  </ion-slides>   -->
 
         <ion-fab right bottom>
           <button ion-fab (click)="agregarEvento()"><ion-icon name="add"></ion-icon></button>

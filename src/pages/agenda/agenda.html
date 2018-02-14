@@ -14,23 +14,8 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<timeline endIcon="call">
-    <timeline-item *ngFor="let item of items">
-      <timeline-time [time]="item.time"></timeline-time>
-      <ion-icon [name]="item.icon"></ion-icon>
-      <ion-card>
-        <ion-card-header>
-          {{item.title}}
-        </ion-card-header>
-        <ion-card-content>
-          {{item.content}}
-        </ion-card-content>
-      </ion-card>
-    </timeline-item>
-
-  </timeline>-->
   <ion-list *ngFor="let day of days">
-    <ion-list-header>{{day.date}}</ion-list-header>
+    <ion-list-header>{{day.title}}</ion-list-header>
     <ion-item *ngFor="let event of day.events" (click)="editarEvento(event.id)">
       <ion-icon item-start name="{{event.icon}}"></ion-icon>
       <h2>{{event.title}}</h2>
@@ -38,6 +23,9 @@
       <ion-note item-end>{{event.startTime}}</ion-note>
     </ion-item>
   </ion-list>  
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
   <div *ngIf="days.length == 0">
     <h4>No dispon&eacute;s de ning&uacute;n evento en este momento, pod&eacute;s agregarlos haciendo click en el bot&oacute;n que aparece abajo.</h4>
   </div>

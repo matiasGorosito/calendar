@@ -16,6 +16,11 @@ export class AgendaPage {
   items = [];
   storage: Storage;
   days = [];
+  range = {
+    from:null,
+    to:null
+  }
+  daysForScroll;
 
   constructor(public navCtrl: NavController, 
             public navParams: NavParams, 
@@ -25,7 +30,14 @@ export class AgendaPage {
             public datesService: DatesProvider
           ) {
     this.storage = storage;
-
+    this.daysForScroll = this.datesService.getDaysForScroll();
+    let param = this.navParams.get('selectedDay');
+    if(param){
+      this.setRange(param);
+    }
+    else{
+      this.setRange(this.getActualRange());
+    }
   }
 
   ionViewWillEnter() {
@@ -33,71 +45,56 @@ export class AgendaPage {
   }
 
   loadEvents(){
-    this.usersService.getUserEvents().then((eventos) => {
-      if(eventos){
-        this.showEvents(eventos);
-      }
-    }); 
+    let range = this.getActiveRange();
+    this.datesService.getDays(range.from,range.to).then((days) => {
+      this.setDays(days);
+    });
   }
 
-  showEvents(events){
-    events = this.getActiveEvents(events);
-    this.clearDays();
+  doInfinite(){
+    let activeRange = this.getActiveRange();
+    let extraRange = activeRange;
+    extraRange.from = this.datesService.addDays(extraRange.to,1);
+    extraRange.to = this.datesService.addDays(extraRange.from,this.daysForScroll*10);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.datesService.getDays(extraRange.from,extraRange.to).then((days) => {
+          if(days.length>0){
+            for(let day of days){
+              this.days.push(day);
+            }
+          }
+          let newRange = this.getActiveRange();
+          newRange.to = extraRange.to;
+          this.setRange(newRange);
+          resolve(); 
+        });
+      },500);
 
-    for(let data of events) {
-      this.addDay(data.fecha_inicio);
-    }
-
-    for(let day of this.getDays()){
-      this.addItems(day,events);
-    }
+    });
   }
 
-  clearDays(){
-    this.days = [];
+  getActualRange(){
+    let range = {
+      from: this.datesService.addDays(new Date(),-this.daysForScroll),
+      to: this.datesService.addDays(new Date(),this.daysForScroll)
+    }
+    return range;
   }
 
-  getActiveEvents(events){
-    return events.filter(event => event.activo);
+  getActiveRange(){
+    return {
+     from: this.range.from,
+     to: this.range.to 
+    };
   }
 
-  addItems(aDay,events){
-    var auxItems = [];
-
-    for(let event of events){
-      var auxItem = this.emptyItem();
-      var startDate = this.datesService.formatoFecha(this.datesService.parse(event.fecha_inicio));
-      if(startDate == aDay.date){
-        auxItem.description = event.descripcion;
-        auxItem.title = event.titulo;
-        if(!event.dia_completo){
-          auxItem.startTime = this.datesService.formatoHora(this.datesService.parse(event.fecha_inicio));
-        }
-        auxItem.id = event.id;
-        auxItem.icon = this.eventsService.findEventIcon(event.tipo).icon;
-        auxItems.push(auxItem);
-      }
-    }
-    aDay.events = this.eventsService.orderEvents(auxItems);
+  setRange(range){
+    this.range = range;
   }
 
-  addDay(date){
-    var aDate = this.datesService.formatoFecha(this.datesService.parse(date));
-    var exists = false;
-    
-    for(let day of this.days){
-      if(day.date == aDate && !exists){
-        exists = true;
-        break;
-      }
-    }
-
-    if(!exists){
-      var aDay = this.emptyDay();
-      aDay.title = aDate;
-      aDay.date = aDate;
-      this.pushDays(aDay);
-    }
+  setDays(days){
+    this.days = days;
   }
   
   agregarEvento(){
@@ -106,32 +103,6 @@ export class AgendaPage {
 
   editarEvento(id){
     this.eventsService.editarEvento(EventoPage,AgendaPage,id);
-  }
-
-  emptyItem(){
-    return {
-      title:null,
-      description : null,
-      startTime: null,
-      icon:null,
-      id:null
-    };
-  }
-
-  emptyDay(){
-    return {
-      title:null,
-      date:null,
-      events:[]
-    };
-  }
-
-  getDays(){
-    return this.eventsService.orderDays(this.days);
-  }
-
-  pushDays(aDay){
-    this.days.push(aDay);
   }
 
 

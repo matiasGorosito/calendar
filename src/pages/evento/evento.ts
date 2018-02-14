@@ -66,8 +66,8 @@ export class EventoPage {
 
   guardar(){
     var data = this.evento;
-    if(data.titulo == null || data.ubicacion == null || data.descripcion == null){
-      this.alertService.message('ERROR','Datos obligatorios','Todos los datos del formulario son obligatorios. Cargue los campos que estén en blanco.',null);
+    if(data.titulo == null || data.tipo == null){
+      this.alertService.message('ERROR','Datos obligatorios','Debe cargar título y tipo de evento para continuar.',null);
       return;
     }
 
@@ -97,6 +97,12 @@ export class EventoPage {
       subTitle:'Desea eliminar el evento?',
       buttons: [
         {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        },       
+        {
           text: 'Confirmar',
           handler: () => {
             this.usersService.changeEvent(this.evento,'del').then((result) => {
@@ -108,12 +114,6 @@ export class EventoPage {
             });
           }  
         },
-        {
-          text: 'Cancelar',
-          handler: () => {
-
-          }
-        }
       ]
     });
     

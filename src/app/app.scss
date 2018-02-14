@@ -15,6 +15,8 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+
+
 .content {
     background: color($colors,back);
     color: color($colors,text);
@@ -120,6 +122,10 @@ ion-menu {
       .item-md {
         background-color: color($colors,back);
       }
+}
+
+.toolbar-title-md {
+    font-weight: bold;
 }
 
 /*ion-label {
