@@ -201,6 +201,7 @@ export class DatesProvider {
   }  
 
   getEventsOfDay(events,date){
+    if(events == null){ return []};
     return events.filter(e => this.getDateWithOutTime(this.parse(e.fecha_inicio)).valueOf() == this.getDateWithOutTime(date).valueOf());
   }
 

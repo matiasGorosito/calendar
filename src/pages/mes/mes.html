@@ -49,7 +49,7 @@
                     {{d.position}}
                   </div>
                   <div class='cal-list'>
-                    <div class='cal-event' *ngFor="let e of d.events">
+                    <div class='cal-event' *ngFor="let e of d.events | slice:0:3; let i=index">
                       <p (click)="editarEvento(e.id)">{{e.titulo}}</p>
                     </div>
                   </div>

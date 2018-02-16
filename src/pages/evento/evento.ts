@@ -71,6 +71,11 @@ export class EventoPage {
       return;
     }
 
+    if(data.fecha_inicio.valueOf() > data.fecha_fin.valueOf()){
+      this.alertService.message('ERROR','Rango de fechas inválido','Debe ingresar una fecha de inicio menor o igual a la fecha fin.',null);
+      return;
+    }
+
     if(data.dia_completo){
       data.fecha_inicio = this.datesService.setFullDay(data.fecha_inicio);
       data.fecha_fin = this.datesService.setFullDay(data.fecha_fin);

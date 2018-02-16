@@ -114,12 +114,14 @@ export class UsersProvider {
 
   getUserEventsByDateRange(from,to){
     return this.getUserEvents().then((events) => {
+      if(events == null){ return []};
       return events.filter(e => this.parseDate(e.fecha_inicio) >= from && this.parseDate(e.fecha_inicio) <= to);
     });
   }
 
   getUserEventsByDate(date){
     return this.getUserEvents().then((events) => {
+      if(events == null){ return []};
       return events.filter(e => this.getDateWithOutTime(this.parseDate(e.fecha_inicio)) == date);
     });
   }
